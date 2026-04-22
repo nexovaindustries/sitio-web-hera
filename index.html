@@ -683,18 +683,12 @@
     </div>
 
     <!-- Masonry Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
       
-      <!-- Post 1: Video Reel Simulation -->
+      <!-- Post 1: Classic Photo -->
       <div class="md:col-span-1 md:row-span-2">
         <div class="insta-card h-full w-full aspect-[4/5] md:aspect-auto group relative">
-          <video class="w-full h-full object-cover absolute inset-0" autoplay loop muted playsinline poster="./promo2.jpg">
-            <source src="./reel1.mp4" type="video/mp4">
-          </video>
-          
-          <div class="absolute top-4 right-4 bg-black/40 backdrop-blur-sm p-2 rounded-full text-white z-10 transition-opacity group-hover:opacity-0">
-            <span class="material-symbols-outlined block text-[20px]">play_arrow</span>
-          </div>
+          <img src="./ig1.jpg" alt="Hera Product" class="w-full h-full object-cover absolute inset-0" />
           <div class="insta-icon">
             <div class="flex items-center gap-1"><span class="material-symbols-outlined">favorite</span> 1.2k</div>
             <div class="flex items-center gap-1"><span class="material-symbols-outlined">mode_comment</span> 84</div>
@@ -704,11 +698,8 @@
 
       <!-- Post 2: Classic Image -->
       <div class="md:col-span-1">
-        <div class="insta-card w-full aspect-square">
+        <div class="insta-card w-full aspect-square relative">
           <img src="./promo1.jpg" alt="Fresa Post" class="w-full h-full object-cover absolute inset-0" />
-          <div class="absolute top-4 right-4 bg-black/40 backdrop-blur-sm p-2 rounded-full text-white z-10">
-            <span class="material-symbols-outlined block text-[18px]">collections</span>
-          </div>
           <div class="insta-icon">
             <div class="flex items-center gap-1"><span class="material-symbols-outlined">favorite</span> 856</div>
             <div class="flex items-center gap-1"><span class="material-symbols-outlined">mode_comment</span> 32</div>
@@ -716,33 +707,32 @@
         </div>
       </div>
 
-      <!-- Post 3: Brand Focus -->
+      <!-- Post 3: Lifestyle Photo -->
       <div class="md:col-span-1">
-        <div class="insta-card w-full aspect-square bg-[#FDFBF7] flex items-center justify-center relative p-8">
-          <div class="absolute inset-0 border-[16px] border-transparent" style="border-image: url('./meander-h.svg') 30 stretch; opacity: 0.1;"></div>
-          <img src="./hera-logo-transparent.png" alt="Hera Logo" class="w-3/4 object-contain" style="filter: brightness(0) saturate(100%) invert(32%) sepia(31%) saturate(1131%) hue-rotate(167deg) brightness(97%) contrast(93%);" />
-          <div class="insta-icon text-[#2F5D8C]">
-            <div class="flex items-center gap-1"><span class="material-symbols-outlined">favorite</span> 540</div>
+        <div class="insta-card w-full aspect-square relative">
+          <img src="./ig2.jpg" alt="Lifestyle Hera" class="w-full h-full object-cover absolute inset-0" />
+          <div class="insta-icon">
+            <div class="flex items-center gap-1"><span class="material-symbols-outlined">favorite</span> 940</div>
+            <div class="flex items-center gap-1"><span class="material-symbols-outlined">mode_comment</span> 45</div>
           </div>
         </div>
       </div>
 
       <!-- Post 4: Experience / Wide -->
       <div class="md:col-span-2">
-        <div class="insta-card w-full h-full min-h-[250px] md:min-h-[300px] group relative">
-          <video class="w-full h-full object-cover absolute inset-0" autoplay loop muted playsinline poster="./promo1.jpg" style="object-position: center 30%;">
-            <source src="./reel2.mp4" type="video/mp4">
-          </video>
-          
-          <div class="absolute inset-0 bg-[#2F5D8C]/20 mix-blend-multiply"></div>
-          <div class="absolute top-4 right-4 bg-black/40 backdrop-blur-sm p-2 rounded-full text-white z-10 transition-opacity group-hover:opacity-0">
-            <span class="material-symbols-outlined block text-[20px]">play_arrow</span>
-          </div>
+        <div class="insta-card w-full h-full min-h-[250px] md:min-h-[350px] group relative">
+          <img src="./promo2.jpg" alt="Experience Hera" class="w-full h-full object-cover absolute inset-0" style="object-position: center 30%;" />
+          <div class="absolute inset-0 bg-[#2F5D8C]/10 mix-blend-multiply"></div>
           <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-500 z-10">
             <h3 class="text-white text-2xl md:text-5xl tracking-[0.2em] font-light text-center px-4 drop-shadow-xl" style="font-family:'Noto Serif',serif;">Vive la<br>Experiencia Griega</h3>
           </div>
+          <div class="insta-icon">
+            <div class="flex items-center gap-1"><span class="material-symbols-outlined">favorite</span> 1.5k</div>
+            <div class="flex items-center gap-1"><span class="material-symbols-outlined">mode_comment</span> 112</div>
+          </div>
         </div>
       </div>
+    </div>
     </div>
 
     <!-- Follow Button -->
