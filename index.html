@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hera - Helado Griego Artesanal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-fixed": "#d2e4ff",
+                        "on-background": "#161d1f",
+                        "on-tertiary-fixed-variant": "#434749",
+                        "surface-dim": "#d4dbdd",
+                        "primary-fixed-dim": "#a1c9ff",
+                        "primary-container": "#005a9c",
+                        "inverse-surface": "#2b3234",
+                        "on-secondary-fixed": "#001f29",
+                        "secondary-container": "#b5e7fe",
+                        "surface-container": "#e8eff1",
+                        "surface-tint": "#1261a3",
+                        "on-secondary-fixed-variant": "#154d5f",
+                        "surface-variant": "#dde4e6",
+                        "on-tertiary-fixed": "#181c1e",
+                        "outline-variant": "#c1c7d2",
+                        "outline": "#727781",
+                        "on-primary-fixed": "#001c37",
+                        "tertiary": "#3d4143",
+                        "tertiary-fixed": "#e0e3e5",
+                        "surface": "#f4fafd",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#c3c7c9",
+                        "on-surface": "#161d1f",
+                        "tertiary-container": "#55595b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#eef5f7",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e2e9ec",
+                        "surface-container-highest": "#dde4e6",
+                        "on-tertiary-container": "#cccfd1",
+                        "background": "#f4fafd",
+                        "on-secondary-container": "#37697d",
+                        "inverse-primary": "#a1c9ff",
+                        "surface-bright": "#f4fafd",
+                        "on-primary": "#ffffff",
+                        "primary": "#004275",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#00487f",
+                        "on-surface-variant": "#414750",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#afd1ff",
+                        "secondary-fixed": "#bbe9ff",
+                        "secondary": "#326578",
+                        "inverse-on-surface": "#ebf2f4",
+                        "secondary-fixed-dim": "#9ccee4",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "brand-blue": "#2F5D8C"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "unit": "8px",
+                        "margin": "32px",
+                        "gutter": "24px",
+                        "container-max": "1200px"
+                    },
+                    fontFamily: {
+                        "headline-md": ["Noto Serif"],
+                        "display-lg": ["Noto Serif"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Noto Serif"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"]
+                    },
+                    fontSize: {
+                        "headline-md": ["24px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .greek-border {
+            border: 16px solid #2F5D8C;
+            position: relative;
+        }
+        .greek-border::before {
+            content: '';
+            position: absolute;
+            top: 8px; right: 8px; bottom: 8px; left: 8px;
+            border: 2px solid #2F5D8C;
+            pointer-events: none;
+        }
+        .chat-bubble-right {
+            border-radius: 16px 16px 0 16px;
+        }
+        .chat-bubble-left {
+            border-radius: 16px 16px 16px 0;
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest min-h-screen p-4 md:p-8 flex flex-col items-center justify-center font-body-md text-on-surface">
+<div class="greek-border w-full max-w-4xl bg-surface-container-lowest min-h-[800px] p-8 md:p-12 relative overflow-hidden flex flex-col shadow-sm shadow-blue-900/5">
+<!-- Corner Decorative Elements (Abstract placeholders) -->
+<div class="absolute top-6 left-6 text-brand-blue opacity-20">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+</div>
+<div class="absolute top-6 right-6 text-brand-blue opacity-20">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<div class="absolute bottom-6 left-6 text-brand-blue opacity-20">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">local_florist</span>
+</div>
+<div class="absolute bottom-6 right-6 text-brand-blue opacity-20">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+<!-- Header -->
+<header class="text-center mb-12 relative z-10">
+<h1 class="font-display-lg text-brand-blue tracking-tighter uppercase flex items-center justify-center gap-1">H<span style="display: inline-block; font-family: serif; transform: scaleX(-1); margin: 0 -2px;">3</span>RA</h1>
+<p class="font-label-md text-brand-blue/80 tracking-[0.2em] mt-2">HELADO GRIEGO ARTESANAL</p><div class="mt-4"><span class="bg-brand-blue text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">Chat Bot</span></div>
+</header>
+<!-- Chat Container -->
+<div class="flex-grow flex flex-col space-y-6 max-w-2xl mx-auto w-full relative z-10">
+<!-- User Message 1 -->
+<div class="flex justify-end">
+<div class="bg-primary-fixed text-on-primary-fixed font-body-md px-6 py-4 chat-bubble-right shadow-sm shadow-blue-900/5 max-w-[80%]">
+                    ¡Hola! ¿Tienen deliverys?
+                </div>
+</div>
+<!-- Bot Message 1 -->
+<div class="flex justify-start">
+<div class="bg-surface-container-lowest text-on-surface font-body-md px-6 py-4 chat-bubble-left shadow-[0_4px_12px_rgba(0,90,156,0.08)] max-w-[80%] border border-surface-variant">
+                    ¡Hola! Sí, llegamos hasta la puerta de tu casa. Encuéntranos en Rappi 🛵📦
+                </div>
+</div>
+<!-- User Message 2 -->
+<div class="flex justify-end">
+<div class="bg-primary-fixed text-on-primary-fixed font-body-md px-6 py-4 chat-bubble-right shadow-sm shadow-blue-900/5 max-w-[80%]">
+                    ¿Qué sabores tienen hoy?
+                </div>
+</div>
+<!-- Bot Message 2 -->
+<div class="flex justify-start">
+<div class="bg-surface-container-lowest text-on-surface font-body-md px-6 py-4 chat-bubble-left shadow-[0_4px_12px_rgba(0,90,156,0.08)] max-w-[80%] border border-surface-variant">
+                    Estos son nuestros sabores disponibles hoy:
+                </div>
+</div>
+<!-- Products Container -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+<!-- Product 1 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_4px_12px_rgba(0,90,156,0.08)] border border-surface-variant group cursor-pointer hover:-translate-y-1 transition-transform duration-300">
+<div class="h-40 w-full bg-surface-container relative overflow-hidden border-b border-surface-variant/50">
+<img alt="Vanilla and cookies artisanal greek yogurt ice cream in a small tub on a clean surface" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlTu-ytaOq5DGS5B1HLfgwm6M54PqbluJtfK6cU-FlDYdIXFHQQSofrfyF-8ATiLbYiPTfG_BgUhzh5zlhoK-YktpXZN3WgRhYPMPCBZE1UdJ5H7sjAcLtwfusgNvgMCntw_UwoYJfDtRVTSL7TpA3Gh78hGXQB5E_ZQtZjcdNyRw63ExogTH-0ppndbYs20XMYOBewmwkeS5xeR1xT9P3gbTJavpfb0FGgYXYpqNcNeSL9Ck8J6PUfkwhVN10gFhSnCG_JmtyKK4"/>
+</div>
+<div class="p-4 text-center">
+<h3 class="font-headline-md text-brand-blue mb-1">Vainilla y Cookies</h3>
+<p class="font-label-md text-on-surface-variant">S/ 12.90</p>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_4px_12px_rgba(0,90,156,0.08)] border border-surface-variant group cursor-pointer hover:-translate-y-1 transition-transform duration-300">
+<div class="h-40 w-full bg-surface-container relative overflow-hidden border-b border-surface-variant/50">
+<img alt="Strawberry artisanal greek yogurt ice cream with granola topping" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiiDMUx9ez7rAPJi9AQi17ay2_jrgSm6OLFSX9evZx2e1PlQNt6FAs6G_IIlv0KJ2PHPEyKUe52XmJkrmuCyZpIcihnBad6a3m-XGWRw_W08wM7q0jJK8FiYE5oVKb03dJF3Im8-ARohNA1KLa6wBBg5SfRUKxaSNRp73RrPxi0vVvMjvZJ6KVlM0HiR0j4B0p2woRVcW1W6vvxAxmMU6yAMlS0Vp3thE2jAl9jWfYLMADmrSpAhXsoLbRwzCknM1IR23N8kV6deg"/>
+</div>
+<div class="p-4 text-center">
+<h3 class="font-headline-md text-brand-blue mb-1">Fresa &amp; Granola</h3>
+<p class="font-label-md text-on-surface-variant">S/ 13.50</p>
+</div>
+</div>
+</div>
+<!-- Bot Message 3 (Price List) -->
+<div class="flex justify-start mt-6">
+<div class="bg-surface-container-lowest text-on-surface font-body-md px-6 py-5 chat-bubble-left shadow-[0_4px_12px_rgba(0,90,156,0.08)] max-w-sm w-full border border-surface-variant">
+<h4 class="font-label-md text-brand-blue mb-3 uppercase tracking-wider text-center border-b border-surface-variant pb-2">Precios</h4>
+<ul class="space-y-2">
+<li class="flex justify-between items-center"><span class="text-on-surface-variant">Vaso pequeño</span> <span class="font-semibold">S/ 8.90</span></li>
+<li class="flex justify-between items-center"><span class="text-on-surface-variant">Vaso mediano</span> <span class="font-semibold">S/ 12.90</span></li>
+<li class="flex justify-between items-center"><span class="text-on-surface-variant">Vaso grande</span> <span class="font-semibold">S/ 16.90</span></li>
+<li class="w-full h-px bg-surface-variant my-2"></li>
+<li class="flex justify-between items-center"><span class="text-on-surface-variant">Cono simple</span> <span class="font-semibold">S/ 5.00</span></li>
+<li class="flex justify-between items-center"><span class="text-on-surface-variant">Cono doble</span> <span class="font-semibold">S/ 8.50</span></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body></html>
