@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="100" viewBox="0 0 50 100">
+  <rect width="50" height="100" fill="#FDFBF7"/>
+
+  <!-- KEY 1: Greek key spiral (clockwise, 0-50 y) -->
+  <!-- Top bar -->
+  <rect x="0" y="0" width="50" height="7" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Right bar -->
+  <rect x="43" y="0" width="7" height="50" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Bottom bar (partial) -->
+  <rect x="14" y="43" width="36" height="7" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Left bar (partial) -->
+  <rect x="0" y="0" width="7" height="29" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Inner top -->
+  <rect x="14" y="14" width="22" height="7" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Inner right -->
+  <rect x="29" y="14" width="7" height="22" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Inner connector -->
+  <rect x="14" y="29" width="7" height="14" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+
+  <!-- KEY 2: Mirrored (counter-clockwise, 50-100 y) -->
+  <!-- Bottom bar -->
+  <rect x="0" y="93" width="50" height="7" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Left bar -->
+  <rect x="0" y="50" width="7" height="50" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Top bar (partial) -->
+  <rect x="0" y="50" width="36" height="7" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Right bar (partial) -->
+  <rect x="43" y="71" width="7" height="29" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Inner bottom -->
+  <rect x="14" y="79" width="22" height="7" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Inner left -->
+  <rect x="14" y="64" width="7" height="22" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Inner connector -->
+  <rect x="29" y="57" width="7" height="14" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+  <rect width="50" height="50" fill="#FDFBF7"/>
+  <!-- Corner: top bar meets left bar -->
+  <!-- Top bar -->
+  <rect x="0" y="0" width="50" height="7" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Left bar -->
+  <rect x="0" y="0" width="7" height="50" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Inner L -->
+  <rect x="14" y="14" width="36" height="7" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <rect x="14" y="14" width="7" height="36" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <!-- Innermost L -->
+  <rect x="28" y="28" width="22" height="7" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+  <rect x="28" y="28" width="7" height="22" fill="#5B8EC2" stroke="#1B3A6B" stroke-width="1"/>
+</svg>

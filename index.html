@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
-<html class="scroll-smooth" lang="en"><head>
+<html class="scroll-smooth" lang="es"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>HERA - Frozen Yogurt Bar</title>
+<title>HERA - Frozen Yogurt Bar | Yogurt Helado Artesanal</title>
 <!-- Fonts & Icons -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&amp;family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&amp;family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500&amp;family=Dancing+Script:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -149,90 +149,248 @@
         },
       }
     </script>
-<style>.texture-bg {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\" opacity=\"0.05\"/%3E%3C/svg%3E")
+<style>
+.texture-bg {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* Greek Meander Border */
+.meander-top, .meander-bottom {
+    background: url('./meander-h.svg') repeat-x;
+    background-size: 100px 50px;
+}
+.meander-left, .meander-right {
+    background: url('./meander-v.svg') repeat-y;
+    background-size: 50px 100px;
+}
+.meander-top { animation: scrollRight 30s linear infinite; }
+.meander-right { animation: scrollDown 30s linear infinite; }
+.meander-bottom { animation: scrollLeft 30s linear infinite; }
+.meander-left { animation: scrollUp 30s linear infinite; }
+
+@keyframes scrollRight { 0%{background-position:0 0} 100%{background-position:1000px 0} }
+@keyframes scrollLeft { 0%{background-position:0 0} 100%{background-position:-1000px 0} }
+@keyframes scrollDown { 0%{background-position:0 0} 100%{background-position:0 1000px} }
+@keyframes scrollUp { 0%{background-position:0 0} 100%{background-position:0 -1000px} }
+
+.corner { background-size: contain; background-repeat: no-repeat; }
+.corner-tl { background-image: url('./corner-tl.svg'); }
+.corner-tr { background-image: url('./corner-tl.svg'); transform: scaleX(-1); }
+.corner-br { background-image: url('./corner-tl.svg'); transform: scale(-1,-1); }
+.corner-bl { background-image: url('./corner-tl.svg'); transform: scaleY(-1); }
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .meander-top, .meander-bottom {
+        height: 25px !important;
+        background-size: 50px 25px !important;
     }
-.meander-border-top, .meander-border-bottom, .meander-border-left, .meander-border-right {
-    background-image: url(https://lh3.googleusercontent.com/aida/ADBb0uiZmq9nKAIJ4JHddSA_jpeWybGxghaD4KPzA80HoH7YeaKJ0zfqdcDmRLjuCUy3vbM4gPdvwz2BWCsQS8ULG41EbAX_94ZDhixKOEcb8RxHJ_E7oCFHY__vihpaXpGhLEFLYQdFiyWYVrOlSLj4Dh4KzD8y3F33arYFi6v0vxgxi5qblRGTfm2Fv_y0KYRyrgbjVuO08uFtl2O8PK7ScGQNcFsy4xRDP-HFiZLlxmAzX5ypkRm5hAxDga5fuanL7WZ4o5nhxbUM);
-    background-size: 150px
+    .meander-left, .meander-right {
+        width: 25px !important;
+        background-size: 25px 50px !important;
     }
-.meander-border-top {
-    background-repeat: repeat-x;
-    animation: slideX 60s linear infinite
+    .corner-tl, .corner-tr, .corner-br, .corner-bl {
+        width: 25px !important;
+        height: 25px !important;
     }
-.meander-border-bottom {
-    background-repeat: repeat-x;
-    animation: slideXReverse 60s linear infinite
+    .mobile-frame-top { top: 25px !important; }
+    .mobile-frame-bottom { bottom: 25px !important; }
+    .mobile-frame-left { left: 25px !important; }
+    .mobile-frame-right { right: 25px !important; }
+    .mobile-canvas-padding { padding: 40px 30px !important; }
+}
+
+/* Image Greek Frames */
+.greek-img-wrapper {
+    position: relative;
+    padding: 24px;
+    background: #FDFBF7;
+    border-radius: 8px;
+    box-shadow: 0 25px 60px -15px rgba(47, 93, 140, 0.4);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease;
+}
+.greek-img-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 35px 70px -15px rgba(47, 93, 140, 0.5);
+}
+.greek-img-wrapper .top-border, .greek-img-wrapper .bottom-border {
+    position: absolute;
+    left: 24px; right: 24px; height: 24px;
+    background: url('./meander-h.svg') repeat-x;
+    background-size: 48px 24px;
+    pointer-events: none;
+}
+.greek-img-wrapper .top-border { top: 0; }
+.greek-img-wrapper .bottom-border { bottom: 0; }
+.greek-img-wrapper .left-border, .greek-img-wrapper .right-border {
+    position: absolute;
+    top: 24px; bottom: 24px; width: 24px;
+    background: url('./meander-v.svg') repeat-y;
+    background-size: 24px 48px;
+    pointer-events: none;
+}
+.greek-img-wrapper .left-border { left: 0; }
+.greek-img-wrapper .right-border { right: 0; }
+.greek-img-wrapper .corner-img {
+    position: absolute;
+    width: 24px; height: 24px;
+    background: url('./corner-tl.svg');
+    background-size: contain;
+    z-index: 10;
+    pointer-events: none;
+}
+.greek-img-wrapper .corner-tl-img { top: 0; left: 0; }
+.greek-img-wrapper .corner-tr-img { top: 0; right: 0; transform: scaleX(-1); }
+.greek-img-wrapper .corner-br-img { bottom: 0; right: 0; transform: scale(-1, -1); }
+.greek-img-wrapper .corner-bl-img { bottom: 0; left: 0; transform: scaleY(-1); }
+
+/* Global glowing effect */
+.glow-effect {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(47,93,140,0.15) 0%, rgba(253,251,247,0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Custom Greek Cursor */
+@media (pointer: fine) {
+    *, *::before, *::after { cursor: none !important; }
+    
+    .cursor-dot {
+        position: fixed; top: 0; left: 0;
+        width: 10px; height: 10px; background-color: #2F5D8C;
+        border-radius: 2px;
+        transform: translate(-50%, -50%) rotate(45deg);
+        pointer-events: none; z-index: 9999;
+        transition: width 0.2s, height 0.2s, background-color 0.2s;
     }
-.meander-border-left {
-    background-repeat: repeat-y;
-    animation: slideY 60s linear infinite
+    .cursor-follower {
+        position: fixed; top: 0; left: 0;
+        width: 40px; height: 40px;
+        border: 1.5px solid rgba(47,93,140,0.5);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none; z-index: 9998;
+        transition: background-color 0.3s, border-color 0.3s, transform 0.1s;
     }
-.meander-border-right {
-    background-repeat: repeat-y;
-    animation: slideYReverse 60s linear infinite
+    .cursor-dot.hovering {
+        background-color: transparent; border: 2px solid #2F5D8C; width: 15px; height: 15px;
     }
-@keyframes slideX {
-    0% {
-        background-position: 0 0;
-        } 100% {
-        background-position: 1500px 0;
-        }
+    .cursor-follower.hovering {
+        background-color: rgba(47,93,140,0.1); border-color: transparent; transform: translate(-50%, -50%) scale(1.5);
     }
-@keyframes slideXReverse {
-    0% {
-        background-position: 0 0;
-        } 100% {
-        background-position: -1500px 0;
-        }
+    .click-particle {
+        position: fixed;
+        width: 20px; height: 20px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232F5D8C'%3E%3Cpath d='M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z'/%3E%3C/svg%3E");
+        background-size: contain; background-repeat: no-repeat;
+        pointer-events: none; z-index: 9997;
+        animation: particleAnim 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-@keyframes slideY {
-    0% {
-        background-position: 0 0;
-        } 100% {
-        background-position: 0 1500px;
-        }
+    @keyframes particleAnim {
+        0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
+        100% { transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(var(--rot)); opacity: 0; }
     }
-@keyframes slideYReverse {
-    0% {
-        background-position: 0 0;
-        } 100% {
-        background-position: 0 -1500px;
-        }
-    }</style>
+}
+
+/* Instagram Feed Effects */
+.insta-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px -5px rgba(47,93,140,0.2);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    background: #fff;
+    cursor: pointer;
+}
+.insta-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 30px 60px -10px rgba(47,93,140,0.3);
+    z-index: 20;
+}
+.insta-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(47,93,140,0.8) 0%, rgba(47,93,140,0) 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+.insta-card:hover::after {
+    opacity: 1;
+}
+.insta-card img {
+    transition: transform 0.8s ease;
+}
+.insta-card:hover img {
+    transform: scale(1.1);
+}
+.insta-icon {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    color: white;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
+    display: flex;
+    gap: 16px;
+}
+.insta-card:hover .insta-icon {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+.coliseo-bg {
+    position: relative;
+    background-color: #2F5D8C;
+    background-image: radial-gradient(circle at 50% 0%, #3A73AB 0%, #2F5D8C 70%);
+    overflow: hidden;
+}
+.coliseo-bg::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.83v58.34h-58.34l-.83-.83V0h58.34zM27 18v24h6V18h-6zM15 18v24h6V18h-6zM39 18v24h6V18h-6z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+</style>
 </head>
 <body class="bg-background text-on-surface antialiased font-body-md texture-bg min-h-screen relative flex flex-col">
-<!-- Decorative Meander Borders -->
-<div class="fixed top-0 left-0 right-0 h-16 meander-border-top z-50 pointer-events-none drop-shadow-md mix-blend-multiply"></div>
-<div class="fixed bottom-0 left-0 right-0 h-16 meander-border-bottom z-50 pointer-events-none drop-shadow-md mix-blend-multiply"></div>
-<div class="fixed top-0 bottom-0 left-0 w-16 meander-border-left z-50 pointer-events-none hidden md:block drop-shadow-md mix-blend-multiply"></div>
-<div class="fixed top-0 bottom-0 right-0 w-16 meander-border-right z-50 pointer-events-none hidden md:block drop-shadow-md mix-blend-multiply"></div>
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-40 bg-[#FDFBF7] dark:bg-stone-950 border-b border-[#2F5D8C]/10 dark:border-blue-900/20 shadow-[0_10px_30px_-15px_rgba(47,93,140,0.08)] mt-16 md:mt-0 md:px-16 pt-16 md:pt-16">
-<div class="max-w-[900px] mx-auto flex justify-between items-center px-12 py-6 md:py-10">
+<!-- Meander Frame -->
+<!-- Corners -->
+<div class="fixed top-0 left-0 w-[50px] h-[50px] corner corner-tl z-50 pointer-events-none"></div>
+<div class="fixed top-0 right-0 w-[50px] h-[50px] corner corner-tr z-50 pointer-events-none"></div>
+<div class="fixed bottom-0 right-0 w-[50px] h-[50px] corner corner-br z-50 pointer-events-none"></div>
+<div class="fixed bottom-0 left-0 w-[50px] h-[50px] corner corner-bl z-50 pointer-events-none"></div>
+<!-- Edges -->
+<div class="fixed top-0 left-[50px] right-[50px] h-[50px] meander-top z-50 pointer-events-none"></div>
+<div class="fixed bottom-0 left-[50px] right-[50px] h-[50px] meander-bottom z-50 pointer-events-none"></div>
+<div class="fixed top-[50px] bottom-[50px] left-0 w-[50px] meander-left z-50 pointer-events-none"></div>
+<div class="fixed top-[50px] bottom-[50px] right-0 w-[50px] meander-right z-50 pointer-events-none"></div>
+<!-- Header -->
+<header class="fixed top-0 w-full bg-[#FDFBF7]/90 backdrop-blur-md border-b border-[#2F5D8C]/10 z-50 transition-colors duration-500">
+<div class="max-w-[1400px] mx-auto flex justify-center items-center px-12 py-6 md:py-8">
 <!-- Navigation Links -->
-<nav class="flex items-center space-x-8">
-<a class="font-label-sm text-label-sm font-serif tracking-[0.15em] uppercase font-medium text-[#2F5D8C] dark:text-blue-300 border-b border-[#2F5D8C] pb-1 transition-all duration-500 ease-out hover:opacity-80" href="#">Menu</a>
-<a class="font-label-sm text-label-sm font-serif tracking-[0.15em] uppercase font-medium text-[#2F5D8C]/60 dark:text-stone-500 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80" href="#">Our Story</a>
-<a class="font-label-sm text-label-sm font-serif tracking-[0.15em] uppercase font-medium text-[#2F5D8C]/60 dark:text-stone-500 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80" href="#">Locations</a>
-<a class="font-label-sm text-label-sm font-serif tracking-[0.15em] uppercase font-medium text-[#2F5D8C]/60 dark:text-stone-500 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80" href="#">Artisans</a>
+<nav class="flex items-center space-x-12">
+<a class="font-label-sm text-label-sm font-serif tracking-[0.2em] uppercase font-medium text-[#2F5D8C] border-b border-[#2F5D8C] pb-1 transition-all duration-500 ease-out hover:opacity-80" href="#carta">Carta</a>
+<a class="font-label-sm text-label-sm font-serif tracking-[0.2em] uppercase font-medium text-[#2F5D8C]/60 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80" href="#horario">Horario</a>
+<a class="font-label-sm text-label-sm font-serif tracking-[0.2em] uppercase font-medium text-[#2F5D8C]/60 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80" href="#ubicacion">Ubicación</a>
+<a class="font-label-sm text-label-sm font-serif tracking-[0.2em] uppercase font-medium text-[#2F5D8C]/60 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80" href="#nosotros">Nosotros</a>
 </nav>
-<!-- Brand Logo -->
-<a class="text-3xl font-light tracking-[0.3em] text-[#2F5D8C] dark:text-blue-300 font-headline-xl" href="#">HERA</a>
-<!-- Trailing Action -->
-<button class="font-label-sm text-label-sm font-serif tracking-[0.15em] uppercase font-medium text-[#2F5D8C] dark:text-blue-400 hover:opacity-80 transition-opacity">
-                Order Online
-            </button>
 </div>
 </header>
 <!-- Main Content Canvas -->
-<main class="flex-grow pt-56 pb-20 px-6 md:px-16 max-w-[900px] mx-auto w-full">
+<main class="flex-grow pt-56 pb-20 px-6 md:px-24 max-w-[1400px] mx-auto w-full">
 <!-- Hero Section -->
-<section class="flex flex-col items-center justify-center text-center mb-32 pt-20">
-<h1 class="font-headline-xl text-[6rem] leading-none text-primary mb-6 tracking-widest font-light">
-                H<span class="text-secondary/80">Σ</span>RA
-            </h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant italic max-w-lg mx-auto tracking-wide">
+<section class="flex flex-col items-center justify-center text-center mb-24 md:mb-32 pt-24 md:pt-20">
+<div class="mb-6 flex justify-center w-full px-4 md:px-0">
+  <img src="./hera-logo-transparent.png" alt="HERA Frozen Yogurt Bar" class="w-full max-w-[300px] md:max-w-[500px] object-contain" style="filter: brightness(0) saturate(100%) invert(32%) sepia(31%) saturate(1131%) hue-rotate(167deg) brightness(97%) contrast(93%);" />
+</div>
+<p class="text-2xl md:text-[2.5rem] text-[#2F5D8C]/80 italic max-w-lg mx-auto tracking-widest mt-2 px-4" style="font-family:'Newsreader',serif;">
                 Frozen Yogurt Bar
             </p>
 <div class="w-12 h-px bg-primary/20 my-10 mx-auto"></div>
@@ -240,16 +398,24 @@
 <!-- Bento Grid Layout -->
 <section class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-32">
 <!-- Large Feature Card -->
-<div class="md:col-span-8 bg-surface-container-lowest rounded-xl shadow-[0_10px_30px_-15px_rgba(47,93,140,0.08)] overflow-hidden flex flex-col group relative">
-<div class="h-80 w-full overflow-hidden relative">
-<img alt="Pure Frozen Yogurt" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDk9xF1PFmWJWkakWUvL5TGpvr05RbnDVCn4ZOZFjynwHy-Lqmb_8lwyFflpn_oVu6D700xOOnWGzzw-0D_lmSPXtsBWWhy29-eg3A8OjT87mjLFVkRHqXsnogbEhh_cZQrWGGaOjUEAqVszgbAvJ38bF70GPuQ9MV-5Z86dCzmW-1FUzcgUf7CtuoI1b5yI2iqfEKT4V-l1_Std2aUd4jBHDhp2xu523zlpVISFZP98nAFsiqAKklnelpTIMxeIgjViz48UleUycQ"/>
-<div class="absolute inset-0 bg-primary-container/5 mix-blend-multiply"></div>
-</div>
-<div class="p-10 flex flex-col justify-center flex-grow">
-<h3 class="font-headline-lg text-headline-lg text-primary mb-4">Purity &amp; Craft</h3>
-<p class="font-body-md text-body-md text-on-surface-variant mb-6">Our frozen yogurt is strained slowly, respecting ancient Mediterranean techniques. No artificial stabilizers, just pure, cultured sheep's milk and wild mountain herbs.</p>
-<a class="inline-flex items-center text-secondary font-label-sm text-label-sm tracking-widest uppercase hover:text-primary transition-colors group/link w-max" href="#">
-                        Discover the Process
+<div class="md:col-span-8 flex flex-col group relative">
+  <div class="glow-effect top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+  <div class="greek-img-wrapper w-full relative z-10 mb-8">
+    <div class="corner-img corner-tl-img"></div>
+    <div class="corner-img corner-tr-img"></div>
+    <div class="corner-img corner-br-img"></div>
+    <div class="corner-img corner-bl-img"></div>
+    <div class="top-border"></div>
+    <div class="bottom-border"></div>
+    <div class="left-border"></div>
+    <div class="right-border"></div>
+    <img alt="Helado de Yogurt Griego con Toppings" class="w-full h-auto object-contain rounded-sm" src="./promo1.jpg"/>
+  </div>
+<div class="px-6 flex flex-col justify-center flex-grow relative z-10">
+<h3 class="font-headline-lg text-headline-lg text-primary mb-4">Pureza y Artesanía</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Nuestro yogurt helado se cuela lentamente, respetando técnicas mediterráneas ancestrales. Sin estabilizantes artificiales, solo pura leche cultivada y hierbas silvestres de montaña.</p>
+<a class="inline-flex items-center text-secondary font-label-sm text-label-sm tracking-widest uppercase hover:text-primary transition-colors group/link w-max" href="#nosotros">
+                        Descubre el Proceso
                         <span class="material-symbols-outlined ml-2 text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
 </a>
 </div>
@@ -259,61 +425,453 @@
 <!-- Flavor Focus -->
 <div class="flex-1 bg-surface-container-lowest rounded-xl shadow-[0_10px_30px_-15px_rgba(47,93,140,0.08)] p-8 flex flex-col justify-between relative overflow-hidden">
 <div>
-<span class="inline-block px-3 py-1 bg-secondary-container/30 text-primary-fixed-variant rounded-full font-label-sm text-[10px] tracking-widest uppercase mb-4">Seasonal</span>
-<h4 class="font-headline-md text-headline-md text-primary mb-2">Wild Fig &amp; Thyme</h4>
+<span class="inline-block px-3 py-1 bg-secondary-container/30 text-primary-fixed-variant rounded-full font-label-sm text-[10px] tracking-widest uppercase mb-4">Temporada</span>
+<h4 class="font-headline-md text-headline-md text-primary mb-2">Higo Silvestre y Tomillo</h4>
 </div>
-<p class="font-body-md text-body-md text-on-surface-variant/80 text-sm italic">Sourced from the sun-drenched groves of Peloponnese.</p>
+<p class="font-body-md text-body-md text-on-surface-variant/80 text-sm italic">De los huertos bañados por el sol del Peloponeso.</p>
 </div>
 <!-- Text Highlight -->
 <div class="flex-1 bg-primary text-on-primary rounded-xl shadow-[0_10px_30px_-15px_rgba(47,93,140,0.2)] p-8 flex flex-col justify-center items-center text-center relative overflow-hidden">
 <span class="material-symbols-outlined text-4xl mb-4 font-light text-on-primary/80">local_florist</span>
-<p class="font-headline-md text-headline-md text-on-primary leading-tight">"A taste of ancient serenity."</p>
+<p class="font-headline-md text-headline-md text-on-primary leading-tight">"Un sabor de serenidad ancestral."</p>
 </div>
 </div>
 </section>
 <!-- Asymmetric Image & Text -->
 <section class="flex flex-col md:flex-row items-center gap-16 mb-32">
 <div class="w-full md:w-5/12 order-2 md:order-1">
-<h2 class="font-headline-lg text-headline-lg text-primary mb-6">Artisanal Toppings</h2>
-<p class="font-body-md text-body-md text-on-surface-variant mb-8">We curate our toppings with the same rigor as our yogurt. From raw honeycomb harvested on Mount Olympus to pistachios from Aegina, every element tells a story of the soil.</p>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-6">Toppings Artesanales</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">Seleccionamos nuestros toppings con el mismo rigor que nuestro yogurt. Desde miel cruda de tomillo hasta pistachos de Aegina, cada elemento cuenta una historia.</p>
 <ul class="space-y-4">
 <li class="flex items-center gap-4">
 <div class="w-1 h-1 bg-secondary rounded-full"></div>
-<span class="font-body-md text-body-md text-on-surface">Raw Thyme Honey</span>
+<span class="font-body-md text-body-md text-on-surface">Miel Cruda de Tomillo</span>
 </li>
 <li class="flex items-center gap-4">
 <div class="w-1 h-1 bg-secondary rounded-full"></div>
-<span class="font-body-md text-body-md text-on-surface">Crushed Aegina Pistachios</span>
+<span class="font-body-md text-body-md text-on-surface">Pistachos Trozados</span>
 </li>
 <li class="flex items-center gap-4">
 <div class="w-1 h-1 bg-secondary rounded-full"></div>
-<span class="font-body-md text-body-md text-on-surface">Candied Citrus Peel</span>
+<span class="font-body-md text-body-md text-on-surface">Pecanas Caramelizadas</span>
 </li>
 </ul>
 </div>
-<div class="w-full md:w-7/12 order-1 md:order-2">
-<div class="relative w-full aspect-[4/5] rounded-xl overflow-hidden shadow-[0_20px_40px_-20px_rgba(47,93,140,0.15)]">
-<img alt="Artisanal Honey and Pistachios" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFIvaXD7eiZC51sFlOlvNELeXFu9XpKkcgA7_P2dXPGdkH-BE7t4urJdLSaecAHX41s8y2IjkUeLAm-rc4CE8CdI8zlLPHMtsVCSE9Q1HrbrniiFmz_J4tvX-FD19aGxP4NxqrJoJk-FxCZGGQ-QvkCkg2mlUe3IoZ8NRLeaJNqmNr7ZsPg_c6t6Eo-6rzSQy46IKDLjRm7tSxRYy-364ud8Z0XhJW7qQLcqBfAJbOBrvL-kHg0olTBlRxTf_Xum5tn3nEWxKeNFw"/>
-</div>
+<div class="w-full md:w-7/12 order-1 md:order-2 relative">
+  <div class="glow-effect top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-150"></div>
+  <div class="greek-img-wrapper w-full relative z-10">
+    <div class="corner-img corner-tl-img"></div>
+    <div class="corner-img corner-tr-img"></div>
+    <div class="corner-img corner-br-img"></div>
+    <div class="corner-img corner-bl-img"></div>
+    <div class="top-border"></div>
+    <div class="bottom-border"></div>
+    <div class="left-border"></div>
+    <div class="right-border"></div>
+    <img alt="Sirviendo Pistacho" class="w-full h-auto object-contain rounded-sm" src="./promo2.jpg"/>
+  </div>
 </div>
 </section>
 </main>
+
+<!-- ═══════════════════ NUESTRA CARTA ═══════════════════ -->
+<section id="carta" class="relative w-full py-24 mb-0" style="background-image: url('./carta-bg.png'); background-size: cover; background-position: center; background-attachment: fixed;">
+  <div class="absolute inset-0 bg-white/30"></div>
+  <div class="relative z-10 max-w-[1100px] mx-auto px-6 md:px-16">
+    <!-- Title -->
+    <div class="text-center mb-16">
+      <h2 class="font-headline-xl text-[3.5rem] text-[#2F5D8C] tracking-widest font-light mb-4" style="font-family:'Noto Serif',serif;">Nuestra Carta</h2>
+      <div class="w-20 h-px bg-[#2F5D8C]/30 mx-auto"></div>
+    </div>
+    <!-- Glass Container -->
+    <div class="rounded-[20px] shadow-[0_20px_60px_-15px_rgba(47,93,140,0.2)] overflow-hidden" style="background: rgba(253,251,247,0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(47,93,140,0.12);">
+      <div class="p-10 md:p-16">
+        <!-- TAMAÑOS -->
+        <h3 class="text-center text-[#2F5D8C] text-2xl tracking-[0.2em] uppercase font-semibold mb-10" style="font-family:'Noto Serif',serif;">Tamaños</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div class="text-center p-6 rounded-2xl bg-white/50 border border-[#2F5D8C]/10 shadow-sm hover:shadow-md transition-shadow">
+            <span class="material-symbols-outlined text-5xl text-[#2F5D8C]/70 mb-3">icecream</span>
+            <h4 class="text-xl text-[#2F5D8C] font-semibold mb-2" style="font-family:'Dancing Script',cursive; font-size:1.8rem;">Pequeño</h4>
+            <p class="text-[#2F5D8C]/70 text-sm italic" style="font-family:'Newsreader',serif;">2 toppings y 1 syrup</p>
+          </div>
+          <div class="text-center p-6 rounded-2xl bg-white/50 border border-[#2F5D8C]/10 shadow-sm hover:shadow-md transition-shadow">
+            <span class="material-symbols-outlined text-5xl text-[#2F5D8C]/70 mb-3">icecream</span>
+            <h4 class="text-xl text-[#2F5D8C] font-semibold mb-2" style="font-family:'Dancing Script',cursive; font-size:1.8rem;">Mediano</h4>
+            <p class="text-[#2F5D8C]/70 text-sm italic" style="font-family:'Newsreader',serif;">2 toppings y 1 syrup</p>
+          </div>
+          <div class="text-center p-6 rounded-2xl bg-white/50 border border-[#2F5D8C]/10 shadow-sm hover:shadow-md transition-shadow">
+            <span class="material-symbols-outlined text-5xl text-[#2F5D8C]/70 mb-3">icecream</span>
+            <h4 class="text-xl text-[#2F5D8C] font-semibold mb-2" style="font-family:'Dancing Script',cursive; font-size:1.8rem;">Grande</h4>
+            <p class="text-[#2F5D8C]/70 text-sm italic" style="font-family:'Newsreader',serif;">3 toppings y 1 syrup</p>
+          </div>
+        </div>
+        <!-- Divider -->
+        <div class="w-16 h-px bg-[#2F5D8C]/20 mx-auto mb-14"></div>
+        <!-- TOPPINGS -->
+        <h3 class="text-center text-[#2F5D8C] text-2xl tracking-[0.2em] uppercase font-semibold mb-8" style="font-family:'Noto Serif',serif;">Toppings</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3 mb-14 max-w-[900px] mx-auto">
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Granola casera</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Almendras fileteadas</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Nueces picadas</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Coco rallado</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Nibs de cacao</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Cranberries deshidratados</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Kataifi c/ pistacho</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Sal de Maras</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Kataifi c/ avellanas</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Pistachos trozados</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Semillas de chía</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Pecanas caramelizadas</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Baklava</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Hojuelas de avena</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Cañihua pop</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2 text-sm" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Semillas de girasol</span>
+        </div>
+        <!-- Divider -->
+        <div class="w-16 h-px bg-[#2F5D8C]/20 mx-auto mb-14"></div>
+        <!-- FRUTAS -->
+        <h3 class="text-center text-[#2F5D8C] text-2xl tracking-[0.2em] uppercase font-semibold mb-8" style="font-family:'Noto Serif',serif;">Frutas</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3 mb-14 max-w-[700px] mx-auto">
+          <span class="text-[#2F5D8C]/80 text-center py-2" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Fresas en láminas</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Arándanos</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Mango en cubos</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Aguaymanto trozado</span>
+        </div>
+        <!-- Divider -->
+        <div class="w-16 h-px bg-[#2F5D8C]/20 mx-auto mb-14"></div>
+        <!-- SYRUPS -->
+        <h3 class="text-center text-[#2F5D8C] text-2xl tracking-[0.2em] uppercase font-semibold mb-8" style="font-family:'Noto Serif',serif;">Syrups</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3 max-w-[800px] mx-auto">
+          <span class="text-[#2F5D8C]/80 text-center py-2" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Miel de maple</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Maracuyá</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Frutos del bosque</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Avellanas con cacao</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Dulce de leche</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Pistacho</span>
+          <span class="text-[#2F5D8C]/80 text-center py-2" style="font-family:'Dancing Script',cursive; font-size:1.1rem;">Aceite de oliva</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ HORARIO ═══════════════════ -->
+<section id="horario" class="w-full py-24 bg-[#FDFBF7]">
+  <div class="max-w-[1100px] mx-auto px-6 md:px-16">
+    <div class="text-center mb-16">
+      <h2 class="font-headline-xl text-[3.5rem] text-[#2F5D8C] tracking-widest font-light mb-4" style="font-family:'Noto Serif',serif;">Nuestro Horario</h2>
+      <div class="w-20 h-px bg-[#2F5D8C]/30 mx-auto"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[700px] mx-auto">
+      <!-- Lunes a Jueves -->
+      <div class="bg-[#2F5D8C] rounded-2xl p-8 text-center text-white shadow-[0_15px_40px_-10px_rgba(47,93,140,0.3)] hover:scale-[1.02] transition-transform">
+        <h3 class="text-2xl font-semibold mb-2" style="font-family:'Dancing Script',cursive; font-size:2rem;">Lunes a Jueves</h3>
+        <p class="text-xl text-white/90 tracking-wide" style="font-family:'Newsreader',serif;">11:00 am — 7:00 pm</p>
+      </div>
+      <!-- Viernes y Sábado -->
+      <div class="bg-[#2F5D8C] rounded-2xl p-8 text-center text-white shadow-[0_15px_40px_-10px_rgba(47,93,140,0.3)] hover:scale-[1.02] transition-transform">
+        <h3 class="text-2xl font-semibold mb-2" style="font-family:'Dancing Script',cursive; font-size:2rem;">Viernes y Sábado</h3>
+        <p class="text-xl text-white/90 tracking-wide" style="font-family:'Newsreader',serif;">10:00 am — 8:00 pm</p>
+      </div>
+    </div>
+    <p class="text-center mt-8 text-[#2F5D8C]/60 italic text-sm" style="font-family:'Newsreader',serif;">* Domingo — mantenimiento</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ NUESTRAS COLABORACIONES ═══════════════════ -->
+<section id="colaboraciones" class="w-full py-20 md:py-24 bg-[#FDFBF7]">
+  <div class="max-w-[1200px] mx-auto px-6 md:px-16">
+    <div class="text-center mb-12 md:mb-16">
+      <h2 class="font-headline-xl text-4xl md:text-[3.5rem] text-[#2F5D8C] tracking-widest font-light mb-4" style="font-family:'Noto Serif',serif;">Nuestras Colaboraciones</h2>
+      <div class="w-20 h-px bg-[#2F5D8C]/30 mx-auto mb-6"></div>
+      <p class="text-[#2F5D8C]/70 text-base md:text-lg font-light tracking-wide max-w-2xl mx-auto" style="font-family:'Newsreader',serif;">Uniendo fuerzas para crear momentos y experiencias inolvidables.</p>
+      <div class="mt-6 md:mt-8">
+        <a href="https://www.instagram.com/duenasdreamnails.peru/" target="_blank" class="inline-flex items-center text-[#2F5D8C] hover:scale-105 transition-transform text-xl font-medium tracking-wider bg-white/50 px-6 py-3 rounded-full border border-[#2F5D8C]/10 shadow-sm" style="font-family:'Newsreader',serif;">
+          <span class="material-symbols-outlined mr-2">photo_camera</span>
+          @duenasdreamnails.peru
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <!-- Colab 1 -->
+      <a href="https://www.instagram.com/duenasdreamnails.peru/" target="_blank" class="flex flex-col group relative">
+        <div class="glow-effect top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-75 opacity-50"></div>
+        <div class="greek-img-wrapper w-full relative z-10 h-full">
+          <div class="corner-img corner-tl-img"></div>
+          <div class="corner-img corner-tr-img"></div>
+          <div class="corner-img corner-br-img"></div>
+          <div class="corner-img corner-bl-img"></div>
+          <div class="top-border"></div>
+          <div class="bottom-border"></div>
+          <div class="left-border"></div>
+          <div class="right-border"></div>
+          <img alt="Colaboración 1" class="w-full h-full object-cover rounded-sm aspect-[4/5]" src="./colab1.jpg"/>
+        </div>
+      </a>
+
+      <!-- Colab 2 -->
+      <a href="https://www.instagram.com/duenasdreamnails.peru/" target="_blank" class="flex flex-col group relative">
+        <div class="glow-effect top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-75 opacity-50"></div>
+        <div class="greek-img-wrapper w-full relative z-10 h-full">
+          <div class="corner-img corner-tl-img"></div>
+          <div class="corner-img corner-tr-img"></div>
+          <div class="corner-img corner-br-img"></div>
+          <div class="corner-img corner-bl-img"></div>
+          <div class="top-border"></div>
+          <div class="bottom-border"></div>
+          <div class="left-border"></div>
+          <div class="right-border"></div>
+          <img alt="Colaboración 2" class="w-full h-full object-cover rounded-sm aspect-[4/5]" src="./colab2.jpg"/>
+        </div>
+      </a>
+
+      <!-- Colab 3 -->
+      <a href="https://www.instagram.com/duenasdreamnails.peru/" target="_blank" class="flex flex-col group relative">
+        <div class="glow-effect top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-75 opacity-50"></div>
+        <div class="greek-img-wrapper w-full relative z-10 h-full">
+          <div class="corner-img corner-tl-img"></div>
+          <div class="corner-img corner-tr-img"></div>
+          <div class="corner-img corner-br-img"></div>
+          <div class="corner-img corner-bl-img"></div>
+          <div class="top-border"></div>
+          <div class="bottom-border"></div>
+          <div class="left-border"></div>
+          <div class="right-border"></div>
+          <img alt="Colaboración 3" class="w-full h-full object-cover rounded-sm aspect-[4/5]" src="./colab3.jpg"/>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ NUESTRO COLISEO (INSTAGRAM) ═══════════════════ -->
+<section id="coliseo" class="w-full py-24 md:py-32 coliseo-bg relative">
+  <!-- Decorative top border -->
+  <div class="absolute top-0 left-0 w-full h-8 bg-[url('./meander-h.svg')] bg-repeat-x opacity-20 filter invert" style="background-size: 60px 30px;"></div>
+  
+  <div class="max-w-[1200px] mx-auto px-6 md:px-16 relative z-10">
+    <div class="text-center mb-12 md:mb-16">
+      <h2 class="font-headline-xl text-4xl md:text-[4rem] text-white tracking-widest font-light mb-2 drop-shadow-lg" style="font-family:'Noto Serif',serif;">Nuestro Coliseo</h2>
+      <a href="https://www.instagram.com/hera.greekpe/" target="_blank" class="inline-flex items-center text-blue-100 hover:text-white transition-colors text-lg md:text-xl font-light tracking-widest mb-6 md:mb-8" style="font-family:'Newsreader',serif;">
+        <span class="material-symbols-outlined mr-2">photo_camera</span>
+        @hera.greekpe
+      </a>
+      <div class="w-32 h-px bg-white/30 mx-auto"></div>
+    </div>
+
+    <!-- Masonry Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Post 1: Video Reel Simulation -->
+      <div class="md:col-span-1 md:row-span-2">
+        <div class="insta-card h-full w-full aspect-[4/5] md:aspect-auto group relative">
+          <!-- Video element ready for MP4, uses promo2.jpg as poster image -->
+          <video class="w-full h-full object-cover absolute inset-0" autoplay loop muted playsinline poster="./promo2.jpg">
+            <source src="./reel1.mp4" type="video/mp4">
+          </video>
+          
+          <div class="absolute top-4 right-4 bg-black/40 backdrop-blur-sm p-2 rounded-full text-white z-10 transition-opacity group-hover:opacity-0">
+            <span class="material-symbols-outlined block text-[20px]">play_arrow</span>
+          </div>
+          <div class="insta-icon">
+            <div class="flex items-center gap-1"><span class="material-symbols-outlined">favorite</span> 1.2k</div>
+            <div class="flex items-center gap-1"><span class="material-symbols-outlined">mode_comment</span> 84</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post 2: Classic Image -->
+      <div class="md:col-span-1">
+        <div class="insta-card w-full aspect-square">
+          <img src="./promo1.jpg" alt="Fresa Post" class="w-full h-full object-cover absolute inset-0" />
+          <div class="absolute top-4 right-4 bg-black/40 backdrop-blur-sm p-2 rounded-full text-white z-10">
+            <span class="material-symbols-outlined block text-[18px]">collections</span>
+          </div>
+          <div class="insta-icon">
+            <div class="flex items-center gap-1"><span class="material-symbols-outlined">favorite</span> 856</div>
+            <div class="flex items-center gap-1"><span class="material-symbols-outlined">mode_comment</span> 32</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post 3: Brand Focus -->
+      <div class="md:col-span-1">
+        <div class="insta-card w-full aspect-square bg-[#FDFBF7] flex items-center justify-center relative p-8">
+          <div class="absolute inset-0 border-[16px] border-transparent" style="border-image: url('./meander-h.svg') 30 stretch; opacity: 0.1;"></div>
+          <img src="./hera-logo-transparent.png" alt="Hera Logo" class="w-3/4 object-contain" style="filter: brightness(0) saturate(100%) invert(32%) sepia(31%) saturate(1131%) hue-rotate(167deg) brightness(97%) contrast(93%);" />
+          <div class="insta-icon text-[#2F5D8C]">
+            <div class="flex items-center gap-1"><span class="material-symbols-outlined">favorite</span> 540</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post 4: Experience / Wide -->
+      <div class="md:col-span-2">
+        <div class="insta-card w-full aspect-video md:aspect-[21/9] group relative">
+          <!-- Video element ready for MP4, uses promo1.jpg as poster image -->
+          <video class="w-full h-full object-cover absolute inset-0" autoplay loop muted playsinline poster="./promo1.jpg" style="object-position: center 30%;">
+            <source src="./reel2.mp4" type="video/mp4">
+          </video>
+          
+          <div class="absolute inset-0 bg-[#2F5D8C]/20 mix-blend-multiply"></div>
+          <div class="absolute top-4 right-4 bg-black/40 backdrop-blur-sm p-2 rounded-full text-white z-10 transition-opacity group-hover:opacity-0">
+            <span class="material-symbols-outlined block text-[20px]">play_arrow</span>
+          </div>
+          <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-500 z-10">
+            <h3 class="text-white text-2xl md:text-5xl tracking-[0.2em] font-light text-center px-4 drop-shadow-xl" style="font-family:'Noto Serif',serif;">Vive la<br>Experiencia Griega</h3>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Follow Button -->
+    <div class="mt-16 text-center">
+      <a href="https://www.instagram.com/hera.greekpe/" target="_blank" class="inline-flex items-center justify-center px-8 py-4 bg-white text-[#2F5D8C] rounded-full font-serif tracking-[0.2em] uppercase text-sm hover:bg-[#F5F3EF] hover:scale-105 transition-all duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.1)]">
+        Síguenos en Instagram
+        <span class="material-symbols-outlined ml-3 text-[18px]">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Decorative bottom border -->
+  <div class="absolute bottom-0 left-0 w-full h-8 bg-[url('./meander-h.svg')] bg-repeat-x opacity-20 filter invert" style="background-size: 60px 30px;"></div>
+</section>
+
+<!-- ═══════════════════ UBICACIÓN ═══════════════════ -->
+<section id="ubicacion" class="w-full py-20 md:py-24 bg-[#F5F3EF]">
+  <div class="max-w-[1100px] mx-auto px-6 md:px-16">
+    <div class="text-center mb-12 md:mb-16">
+      <h2 class="font-headline-xl text-4xl md:text-[3.5rem] text-[#2F5D8C] tracking-widest font-light mb-4" style="font-family:'Noto Serif',serif;">Ubicación</h2>
+      <div class="w-20 h-px bg-[#2F5D8C]/30 mx-auto"></div>
+    </div>
+    
+    <div class="greek-img-wrapper max-w-[900px] mx-auto">
+      <div class="corner-img corner-tl-img"></div>
+      <div class="corner-img corner-tr-img"></div>
+      <div class="corner-img corner-br-img"></div>
+      <div class="corner-img corner-bl-img"></div>
+      <div class="top-border"></div>
+      <div class="bottom-border"></div>
+      <div class="left-border"></div>
+      <div class="right-border"></div>
+      <div class="rounded-lg overflow-hidden shadow-[0_20px_60px_-15px_rgba(47,93,140,0.15)] relative z-10 w-full bg-white">
+        <iframe src="https://maps.google.com/maps?q=Casona%20San%20Jose,%20calle%20san%20jose%20117,%20Arequipa&t=&z=17&ie=UTF8&iwloc=&output=embed" width="100%" height="450" style="border:0; display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+    
+    <div class="mt-12 text-center">
+      <p class="text-[#2F5D8C] text-xl font-medium tracking-wide" style="font-family:'Noto Serif',serif;">
+        Casona San Jose
+      </p>
+      <p class="text-[#2F5D8C]/80 text-lg italic mt-2" style="font-family:'Newsreader',serif;">
+        <span class="material-symbols-outlined text-[18px] align-middle mr-2">location_on</span>
+        Calle San José 117, Arequipa, Perú
+      </p>
+    </div>
+  </div>
+</section>
+
 <!-- Footer -->
-<footer class="w-full pb-24 pt-10 bg-[#FDFBF7] dark:bg-stone-950 border-t border-[#2F5D8C]/5 dark:border-blue-900/10 mt-auto z-40 relative">
-<div class="max-w-[900px] mx-auto flex flex-col items-center space-y-6 px-12">
+<footer class="w-full pb-24 pt-10 bg-[#FDFBF7] border-t border-[#2F5D8C]/5 mt-auto z-40 relative">
+<div class="max-w-[1400px] mx-auto flex flex-col items-center space-y-6 px-12">
 <!-- Brand Logo -->
-<div class="text-lg font-light tracking-widest text-[#2F5D8C] dark:text-blue-300 font-headline-xl">HERA</div>
+<div class="flex justify-center mb-2">
+  <img src="./hera-logo-transparent.png" alt="HERA Logo" class="h-12 object-contain opacity-90" style="filter: brightness(0) saturate(100%) invert(32%) sepia(31%) saturate(1131%) hue-rotate(167deg) brightness(97%) contrast(93%);" />
+</div>
 <!-- Links -->
 <nav class="flex space-x-6">
-<a class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 dark:text-stone-600 hover:text-[#2F5D8C] dark:hover:text-blue-200 transition-colors focus:outline-none focus:text-[#2F5D8C]" href="#">Philosophy</a>
-<a class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 dark:text-stone-600 hover:text-[#2F5D8C] dark:hover:text-blue-200 transition-colors focus:outline-none focus:text-[#2F5D8C]" href="#">Press</a>
-<a class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 dark:text-stone-600 hover:text-[#2F5D8C] dark:hover:text-blue-200 transition-colors focus:outline-none focus:text-[#2F5D8C]" href="#">Inquiries</a>
-<a class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 dark:text-stone-600 hover:text-[#2F5D8C] dark:hover:text-blue-200 transition-colors focus:outline-none focus:text-[#2F5D8C]" href="#">Instagram</a>
+<a class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 hover:text-[#2F5D8C] transition-colors" href="#carta">Carta</a>
+<a class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 hover:text-[#2F5D8C] transition-colors" href="#horario">Horario</a>
+<a class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 hover:text-[#2F5D8C] transition-colors" href="#ubicacion">Ubicación</a>
+<a class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 hover:text-[#2F5D8C] transition-colors" href="#">Instagram</a>
 </nav>
 <!-- Copyright Text -->
-<p class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 dark:text-stone-600 text-center">
-                © MMXXIV HERA Frozen Yogurt Bar. Crafted with purity.
+<p class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 text-center">
+                © MMXXVI HERA Frozen Yogurt Bar. Elaborado con pureza.
             </p>
 </div>
 </footer>
+
+<!-- Cursor Elements -->
+<div class="cursor-dot hidden md:block"></div>
+<div class="cursor-follower hidden md:block"></div>
+
+<script>
+// Custom Cursor Logic
+document.addEventListener('DOMContentLoaded', () => {
+    // Only initialize on non-touch devices
+    if(window.matchMedia("(pointer: coarse)").matches) return;
+
+    const dot = document.querySelector('.cursor-dot');
+    const follower = document.querySelector('.cursor-follower');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let followerX = mouseX;
+    let followerY = mouseY;
+    let isHovering = false;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        dot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%)) rotate(45deg)`;
+    });
+
+    // Smooth follow for the outer circle
+    function animate() {
+        followerX += (mouseX - followerX) * 0.15;
+        followerY += (mouseY - followerY) * 0.15;
+        
+        follower.style.transform = `translate(calc(${followerX}px - 50%), calc(${followerY}px - 50%))`;
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Hover effects on interactables
+    const interactables = document.querySelectorAll('a, button, input, .insta-card');
+    interactables.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            dot.classList.add('hovering');
+            follower.classList.add('hovering');
+            isHovering = true;
+        });
+        el.addEventListener('mouseleave', () => {
+            dot.classList.remove('hovering');
+            follower.classList.remove('hovering');
+            isHovering = false;
+        });
+    });
+
+    // Greek Particle click effect
+    document.addEventListener('click', (e) => {
+        // Create 4 star/greek particles
+        const numParticles = 4;
+        for(let i = 0; i < numParticles; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('click-particle');
+            particle.style.left = e.clientX + 'px';
+            particle.style.top = e.clientY + 'px';
+            
+            // Calculate direction
+            const angle = (i * (360 / numParticles)) * (Math.PI / 180);
+            const distance = 40 + Math.random() * 20;
+            const tx = `calc(-50% + ${Math.cos(angle) * distance}px)`;
+            const ty = `calc(-50% + ${Math.sin(angle) * distance}px)`;
+            const rot = `${Math.random() * 90}deg`;
+            
+            particle.style.setProperty('--tx', tx);
+            particle.style.setProperty('--ty', ty);
+            particle.style.setProperty('--rot', rot);
+            
+            document.body.appendChild(particle);
+            
+            // Remove after animation
+            setTimeout(() => {
+                particle.remove();
+            }, 600);
+        }
+    });
+});
+</script>
 </body></html>
