@@ -1,806 +1,319 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
+
+<html class="scroll-smooth" lang="en"><head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>HERA — Helado Griego Artesanal</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<style>
-  :root {
-    --blue:      #2F5D8C;
-    --blue2:     #1a3d62;
-    --blue3:     #0f2540;
-    --light-bg:  #E6EEF7;
-    --chat-r:    #DCE7F5;
-    --white:     #ffffff;
-    --page-bg:   #f0f6fc;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: var(--page-bg);
-    min-height: 100vh;
-    color: #1a2a38;
-    padding: 36px 28px;
-  }
-
-  /* ═══════════════════════════════════════
-     FULL-PAGE GREEK BORDER FRAME
-  ═══════════════════════════════════════ */
-
-  .frame-outer {
-    position: fixed;
-    inset: 10px;
-    border: 5px solid var(--blue);
-    pointer-events: none;
-    z-index: 500;
-    border-radius: 4px;
-  }
-
-  .frame-inner {
-    position: fixed;
-    inset: 19px;
-    border: 1.5px solid var(--blue);
-    pointer-events: none;
-    z-index: 500;
-    opacity: 0.45;
-    border-radius: 2px;
-  }
-
-  /* Greek meander lines top & bottom of frame */
-  .frame-meander-top,
-  .frame-meander-bottom {
-    position: fixed;
-    left: 32px;
-    right: 32px;
-    height: 6px;
-    pointer-events: none;
-    z-index: 501;
-    background-image:
-      repeating-linear-gradient(90deg, var(--blue) 0, var(--blue) 4px, transparent 4px, transparent 8px),
-      repeating-linear-gradient(0deg,  var(--blue) 0, var(--blue) 4px, transparent 4px, transparent 8px);
-    background-size: 16px 6px, 8px 6px;
-    opacity: 0.18;
-  }
-  .frame-meander-top    { top: 24px; }
-  .frame-meander-bottom { bottom: 24px; }
-
-  /* ═══════════════════════════════════════
-     CORNER DECORATIONS — OLIVE BRANCHES
-  ═══════════════════════════════════════ */
-
-  .corner {
-    position: fixed;
-    pointer-events: none;
-    z-index: 502;
-    width: 90px;
-    height: 90px;
-  }
-  .corner-tl { top: 8px;    left: 8px;    }
-  .corner-tr { top: 8px;    right: 8px;   transform: scaleX(-1); }
-  .corner-bl { bottom: 8px; left: 8px;    transform: scaleY(-1); }
-  .corner-br { bottom: 8px; right: 8px;   transform: scale(-1);  }
-
-  /* ═══════════════════════════════════════
-     SIDE STAMPS — HERA CIRCULAR SEALS
-  ═══════════════════════════════════════ */
-
-  .stamp {
-    position: fixed;
-    pointer-events: none;
-    z-index: 502;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  .stamp-left  { left: 12px; }
-  .stamp-right { right: 12px; }
-
-  /* Side Greek column decorations */
-  .side-col {
-    position: fixed;
-    pointer-events: none;
-    z-index: 501;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.12;
-  }
-  .side-col-left  { left: 5px; }
-  .side-col-right { right: 5px; }
-
-  /* ═══════════════════════════════════════
-     MAIN LAYOUT
-  ═══════════════════════════════════════ */
-
-  .page-wrap {
-    max-width: 500px;
-    margin: 0 auto;
-    min-height: calc(100vh - 72px);
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  /* ═══════════════════════════════════════
-     CHAT CONTAINER
-  ═══════════════════════════════════════ */
-
-  .chat-box {
-    flex: 1;
-    background: var(--white);
-    border-radius: 24px;
-    box-shadow:
-      0 4px 12px rgba(47,93,140,.08),
-      0 16px 48px rgba(47,93,140,.10),
-      0 0 0 1px rgba(47,93,140,.07);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  /* ═══ CHAT HEADER ═══ */
-  .chat-head {
-    background: linear-gradient(135deg, var(--blue) 0%, var(--blue2) 100%);
-    padding: 18px 22px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-shrink: 0;
-  }
-
-  .head-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.15);
-    border: 2px solid rgba(255,255,255,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .head-info { flex: 1; }
-
-  .head-name {
-    font-family: 'Noto Serif', serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: white;
-    letter-spacing: 0.08em;
-  }
-
-  .head-sub {
-    font-size: 0.72rem;
-    color: rgba(255,255,255,0.72);
-    font-weight: 500;
-    margin-top: 3px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .online-dot {
-    width: 7px;
-    height: 7px;
-    background: #4ade80;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  /* Greek meander stripe under header */
-  .meander-strip {
-    height: 8px;
-    flex-shrink: 0;
-    background-image:
-      repeating-linear-gradient(90deg, var(--blue) 0, var(--blue) 4px, transparent 4px, transparent 8px),
-      repeating-linear-gradient(0deg,  var(--blue) 0, var(--blue) 4px, transparent 4px, transparent 8px);
-    background-size: 16px 8px, 8px 8px;
-    opacity: 0.14;
-  }
-
-  /* ═══ CHAT BODY ═══ */
-  .chat-body {
-    flex: 1;
-    padding: 22px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    background: var(--light-bg);
-    background-image:
-      radial-gradient(ellipse at 15% 15%, rgba(47,93,140,.05) 0%, transparent 55%),
-      radial-gradient(ellipse at 85% 85%, rgba(47,93,140,.04) 0%, transparent 55%);
-    overflow-y: auto;
-  }
-
-  /* Date separator */
-  .date-sep {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 4px 0;
-  }
-  .date-sep::before, .date-sep::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(47,93,140,0.2);
-  }
-  .date-sep span {
-    font-size: 0.68rem;
-    font-weight: 700;
-    color: rgba(47,93,140,0.45);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  /* ═══ MESSAGE ROWS ═══ */
-  .msg-row {
-    display: flex;
-    align-items: flex-end;
-    gap: 9px;
-  }
-  .msg-row.right { flex-direction: row-reverse; }
-
-  .msg-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: var(--blue);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(47,93,140,0.25);
-  }
-
-  .msg-group {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    max-width: 76%;
-  }
-  .msg-row.right .msg-group { align-items: flex-end; }
-
-  /* Bubbles */
-  .bubble {
-    padding: 11px 15px;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    font-weight: 500;
-    word-break: break-word;
-  }
-
-  .bubble-left {
-    background: var(--white);
-    border-radius: 20px 20px 20px 0;
-    box-shadow: 0 2px 10px rgba(47,93,140,.09), 0 1px 3px rgba(47,93,140,.06);
-    color: #1a2a38;
-  }
-
-  .bubble-right {
-    background: var(--chat-r);
-    border-radius: 20px 20px 0 20px;
-    color: var(--blue2);
-    box-shadow: 0 1px 4px rgba(47,93,140,.08);
-  }
-
-  .msg-time {
-    font-size: 0.62rem;
-    color: rgba(47,93,140,0.42);
-    font-weight: 600;
-    padding: 0 3px;
-    letter-spacing: 0.03em;
-  }
-
-  /* ═══ PRODUCT CARDS ═══ */
-  .cards-wrap {
-    padding-left: 39px;
-    display: flex;
-    gap: 10px;
-  }
-
-  .product-card {
-    flex: 1;
-    max-width: 195px;
-    background: var(--white);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow:
-      0 3px 14px rgba(47,93,140,.10),
-      0 1px 4px rgba(47,93,140,.06);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 28px rgba(47,93,140,.16);
-  }
-
-  .product-card-img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    display: block;
-  }
-
-  .product-card-body {
-    padding: 10px 12px 12px;
-    text-align: center;
-    background: linear-gradient(180deg, #fff 0%, #f5f9ff 100%);
-  }
-
-  .product-card-name {
-    font-family: 'Noto Serif', serif;
-    font-size: 0.83rem;
-    font-weight: 700;
-    color: var(--blue2);
-    line-height: 1.35;
-  }
-
-  /* Greek horizontal rule under name */
-  .card-rule {
-    width: 28px;
-    height: 2px;
-    background: var(--blue);
-    margin: 6px auto 0;
-    opacity: 0.25;
-    border-radius: 2px;
-  }
-
-  /* ═══ QUICK REPLY CHIPS ═══ */
-  .chips-wrap {
-    padding-left: 39px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-  }
-
-  .chip {
-    padding: 6px 13px;
-    border-radius: 9999px;
-    border: 1.5px solid rgba(47,93,140,0.4);
-    font-size: 0.77rem;
-    font-weight: 700;
-    color: var(--blue);
-    background: white;
-    cursor: default;
-    letter-spacing: 0.01em;
-    transition: background 0.2s, border-color 0.2s;
-  }
-  .chip:hover {
-    background: var(--chat-r);
-    border-color: var(--blue);
-  }
-
-  /* WhatsApp button */
-  .wa-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 9px 16px;
-    background: #25D366;
-    color: white;
-    border-radius: 9999px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-decoration: none;
-    margin-top: 9px;
-    width: fit-content;
-    transition: opacity 0.2s, transform 0.2s;
-  }
-  .wa-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-
-  /* ═══ CHAT FOOTER ═══ */
-  .chat-foot {
-    padding: 14px 16px;
-    background: white;
-    border-top: 1px solid rgba(47,93,140,0.09);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-  }
-
-  .chat-input-fake {
-    flex: 1;
-    padding: 11px 16px;
-    border-radius: 9999px;
-    border: 1.5px solid rgba(47,93,140,0.17);
-    font-size: 0.85rem;
-    color: rgba(47,93,140,0.38);
-    background: var(--light-bg);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    cursor: default;
-    user-select: none;
-  }
-
-  .chat-send {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: var(--blue);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 3px 10px rgba(47,93,140,0.25);
-  }
-
-  /* ═══ RESPONSIVE ═══ */
-  @media (max-width: 640px) {
-    body { padding: 12px 8px; }
-    .frame-outer { inset: 6px; border-width: 3px; }
-    .frame-inner { inset: 13px; }
-    .frame-meander-top    { top: 17px; left: 18px; right: 18px; }
-    .frame-meander-bottom { bottom: 17px; left: 18px; right: 18px; }
-    .corner, .stamp, .side-col { display: none; }
-    .cards-wrap { padding-left: 0; }
-    .chips-wrap { padding-left: 0; }
-  }
-</style>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HERA - Frozen Yogurt Bar</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&amp;family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#bfc8ce",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#dbe4eb",
+                    "tertiary-container": "#535c62",
+                    "on-secondary-fixed": "#001e30",
+                    "on-primary-container": "#b5d5ff",
+                    "inverse-primary": "#9fcaff",
+                    "on-background": "#1b1c1a",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#3a617f",
+                    "secondary": "#3b6280",
+                    "surface-container-highest": "#e4e2de",
+                    "tertiary": "#3c454a",
+                    "background": "#fbf9f5",
+                    "outline": "#727780",
+                    "on-error": "#ffffff",
+                    "secondary-container": "#b4dcfe",
+                    "error-container": "#ffdad6",
+                    "inverse-surface": "#30312e",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#2f5d8c",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#e4e2de",
+                    "outline-variant": "#c2c7d0",
+                    "on-primary-fixed-variant": "#154977",
+                    "primary": "#0f4573",
+                    "on-primary-fixed": "#001d36",
+                    "surface-container-low": "#f5f3ef",
+                    "on-surface": "#1b1c1a",
+                    "primary-fixed": "#d1e4ff",
+                    "surface": "#fbf9f5",
+                    "inverse-on-surface": "#f2f0ed",
+                    "surface-container": "#efeeea",
+                    "surface-container-high": "#eae8e4",
+                    "surface-dim": "#dbdad6",
+                    "surface-bright": "#fbf9f5",
+                    "secondary-fixed": "#cbe6ff",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed": "#141d22",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-container": "#cbd4db",
+                    "on-tertiary-fixed-variant": "#3f484e",
+                    "surface-tint": "#336190",
+                    "on-secondary-fixed-variant": "#214a67",
+                    "on-surface-variant": "#42474f",
+                    "primary-fixed-dim": "#9fcaff",
+                    "secondary-fixed-dim": "#a4cbed"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "container-max": "1200px",
+                    "margin": "48px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "body-md": [
+                            "newsreader"
+                    ],
+                    "label-sm": [
+                            "newsreader"
+                    ],
+                    "headline-md": [
+                            "notoSerif"
+                    ],
+                    "body-lg": [
+                            "newsreader"
+                    ],
+                    "headline-lg": [
+                            "notoSerif"
+                    ],
+                    "headline-xl": [
+                            "notoSerif"
+                    ]
+            },
+            "fontSize": {
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-sm": [
+                            "12px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "0.1em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.3",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-xl": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>.texture-bg {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\" opacity=\"0.05\"/%3E%3C/svg%3E")
+    }
+.meander-border-top, .meander-border-bottom, .meander-border-left, .meander-border-right {
+    background-image: url(https://lh3.googleusercontent.com/aida/ADBb0uiZmq9nKAIJ4JHddSA_jpeWybGxghaD4KPzA80HoH7YeaKJ0zfqdcDmRLjuCUy3vbM4gPdvwz2BWCsQS8ULG41EbAX_94ZDhixKOEcb8RxHJ_E7oCFHY__vihpaXpGhLEFLYQdFiyWYVrOlSLj4Dh4KzD8y3F33arYFi6v0vxgxi5qblRGTfm2Fv_y0KYRyrgbjVuO08uFtl2O8PK7ScGQNcFsy4xRDP-HFiZLlxmAzX5ypkRm5hAxDga5fuanL7WZ4o5nhxbUM);
+    background-size: 150px
+    }
+.meander-border-top {
+    background-repeat: repeat-x;
+    animation: slideX 60s linear infinite
+    }
+.meander-border-bottom {
+    background-repeat: repeat-x;
+    animation: slideXReverse 60s linear infinite
+    }
+.meander-border-left {
+    background-repeat: repeat-y;
+    animation: slideY 60s linear infinite
+    }
+.meander-border-right {
+    background-repeat: repeat-y;
+    animation: slideYReverse 60s linear infinite
+    }
+@keyframes slideX {
+    0% {
+        background-position: 0 0;
+        } 100% {
+        background-position: 1500px 0;
+        }
+    }
+@keyframes slideXReverse {
+    0% {
+        background-position: 0 0;
+        } 100% {
+        background-position: -1500px 0;
+        }
+    }
+@keyframes slideY {
+    0% {
+        background-position: 0 0;
+        } 100% {
+        background-position: 0 1500px;
+        }
+    }
+@keyframes slideYReverse {
+    0% {
+        background-position: 0 0;
+        } 100% {
+        background-position: 0 -1500px;
+        }
+    }</style>
 </head>
-<body>
-
-<!-- ═══════════════════════════════════════════
-     GREEK BORDER FRAME
-════════════════════════════════════════════ -->
-<div class="frame-outer"></div>
-<div class="frame-inner"></div>
-<div class="frame-meander-top"></div>
-<div class="frame-meander-bottom"></div>
-
-<!-- ═══ CORNER OLIVE BRANCHES ═══ -->
-
-<!-- Top-Left corner -->
-<div class="corner corner-tl">
-  <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
-    <!-- Main stem -->
-    <path d="M14 76 C22 64, 38 46, 58 22 C66 14, 74 10, 82 8" stroke="#2F5D8C" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.4"/>
-    <!-- Branch stems -->
-    <path d="M28 62 C24 58, 18 56, 12 57" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <path d="M38 50 C40 44, 38 38, 33 34" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <path d="M50 38 C46 34, 42 29, 40 22" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <path d="M62 24 C66 20, 72 18, 78 20" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <!-- Leaves along stem -->
-    <ellipse cx="22" cy="68" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.28" transform="rotate(-48 22 68)"/>
-    <ellipse cx="34" cy="56" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.32" transform="rotate(-42 34 56)"/>
-    <ellipse cx="46" cy="43" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 46 43)"/>
-    <ellipse cx="57" cy="30" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.32" transform="rotate(-42 57 30)"/>
-    <ellipse cx="70" cy="18" rx="6.5" ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 70 18)"/>
-    <!-- Small berries -->
-    <circle cx="16" cy="57" r="2" fill="#2F5D8C" opacity="0.25"/>
-    <circle cx="35" cy="32" r="2" fill="#2F5D8C" opacity="0.25"/>
-    <circle cx="77" cy="21" r="2" fill="#2F5D8C" opacity="0.25"/>
-    <!-- Corner meander ornament -->
-    <path d="M14 14 L22 14 L22 22 L30 22 L30 14 L38 14" stroke="#2F5D8C" stroke-width="1.5" fill="none" opacity="0.22"/>
-  </svg>
+<body class="bg-background text-on-surface antialiased font-body-md texture-bg min-h-screen relative flex flex-col">
+<!-- Decorative Meander Borders -->
+<div class="fixed top-0 left-0 right-0 h-16 meander-border-top z-50 pointer-events-none drop-shadow-md mix-blend-multiply"></div>
+<div class="fixed bottom-0 left-0 right-0 h-16 meander-border-bottom z-50 pointer-events-none drop-shadow-md mix-blend-multiply"></div>
+<div class="fixed top-0 bottom-0 left-0 w-16 meander-border-left z-50 pointer-events-none hidden md:block drop-shadow-md mix-blend-multiply"></div>
+<div class="fixed top-0 bottom-0 right-0 w-16 meander-border-right z-50 pointer-events-none hidden md:block drop-shadow-md mix-blend-multiply"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-40 bg-[#FDFBF7] dark:bg-stone-950 border-b border-[#2F5D8C]/10 dark:border-blue-900/20 shadow-[0_10px_30px_-15px_rgba(47,93,140,0.08)] mt-16 md:mt-0 md:px-16 pt-16 md:pt-16">
+<div class="max-w-[900px] mx-auto flex justify-between items-center px-12 py-6 md:py-10">
+<!-- Navigation Links -->
+<nav class="flex items-center space-x-8">
+<a class="font-label-sm text-label-sm font-serif tracking-[0.15em] uppercase font-medium text-[#2F5D8C] dark:text-blue-300 border-b border-[#2F5D8C] pb-1 transition-all duration-500 ease-out hover:opacity-80" href="#">Menu</a>
+<a class="font-label-sm text-label-sm font-serif tracking-[0.15em] uppercase font-medium text-[#2F5D8C]/60 dark:text-stone-500 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80" href="#">Our Story</a>
+<a class="font-label-sm text-label-sm font-serif tracking-[0.15em] uppercase font-medium text-[#2F5D8C]/60 dark:text-stone-500 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80" href="#">Locations</a>
+<a class="font-label-sm text-label-sm font-serif tracking-[0.15em] uppercase font-medium text-[#2F5D8C]/60 dark:text-stone-500 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80" href="#">Artisans</a>
+</nav>
+<!-- Brand Logo -->
+<a class="text-3xl font-light tracking-[0.3em] text-[#2F5D8C] dark:text-blue-300 font-headline-xl" href="#">HERA</a>
+<!-- Trailing Action -->
+<button class="font-label-sm text-label-sm font-serif tracking-[0.15em] uppercase font-medium text-[#2F5D8C] dark:text-blue-400 hover:opacity-80 transition-opacity">
+                Order Online
+            </button>
 </div>
-
-<!-- Top-Right corner (mirror) -->
-<div class="corner corner-tr">
-  <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
-    <path d="M14 76 C22 64, 38 46, 58 22 C66 14, 74 10, 82 8" stroke="#2F5D8C" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.4"/>
-    <path d="M28 62 C24 58, 18 56, 12 57" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <path d="M38 50 C40 44, 38 38, 33 34" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <path d="M50 38 C46 34, 42 29, 40 22" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <path d="M62 24 C66 20, 72 18, 78 20" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <ellipse cx="22" cy="68" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.28" transform="rotate(-48 22 68)"/>
-    <ellipse cx="34" cy="56" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.32" transform="rotate(-42 34 56)"/>
-    <ellipse cx="46" cy="43" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 46 43)"/>
-    <ellipse cx="57" cy="30" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.32" transform="rotate(-42 57 30)"/>
-    <ellipse cx="70" cy="18" rx="6.5" ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 70 18)"/>
-    <circle cx="16" cy="57" r="2" fill="#2F5D8C" opacity="0.25"/>
-    <circle cx="35" cy="32" r="2" fill="#2F5D8C" opacity="0.25"/>
-    <circle cx="77" cy="21" r="2" fill="#2F5D8C" opacity="0.25"/>
-    <path d="M14 14 L22 14 L22 22 L30 22 L30 14 L38 14" stroke="#2F5D8C" stroke-width="1.5" fill="none" opacity="0.22"/>
-  </svg>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-56 pb-20 px-6 md:px-16 max-w-[900px] mx-auto w-full">
+<!-- Hero Section -->
+<section class="flex flex-col items-center justify-center text-center mb-32 pt-20">
+<h1 class="font-headline-xl text-[6rem] leading-none text-primary mb-6 tracking-widest font-light">
+                H<span class="text-secondary/80">Σ</span>RA
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant italic max-w-lg mx-auto tracking-wide">
+                Frozen Yogurt Bar
+            </p>
+<div class="w-12 h-px bg-primary/20 my-10 mx-auto"></div>
+</section>
+<!-- Bento Grid Layout -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-32">
+<!-- Large Feature Card -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-xl shadow-[0_10px_30px_-15px_rgba(47,93,140,0.08)] overflow-hidden flex flex-col group relative">
+<div class="h-80 w-full overflow-hidden relative">
+<img alt="Pure Frozen Yogurt" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDk9xF1PFmWJWkakWUvL5TGpvr05RbnDVCn4ZOZFjynwHy-Lqmb_8lwyFflpn_oVu6D700xOOnWGzzw-0D_lmSPXtsBWWhy29-eg3A8OjT87mjLFVkRHqXsnogbEhh_cZQrWGGaOjUEAqVszgbAvJ38bF70GPuQ9MV-5Z86dCzmW-1FUzcgUf7CtuoI1b5yI2iqfEKT4V-l1_Std2aUd4jBHDhp2xu523zlpVISFZP98nAFsiqAKklnelpTIMxeIgjViz48UleUycQ"/>
+<div class="absolute inset-0 bg-primary-container/5 mix-blend-multiply"></div>
 </div>
-
-<!-- Bottom-Left corner (flip vertical) -->
-<div class="corner corner-bl">
-  <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
-    <path d="M14 76 C22 64, 38 46, 58 22 C66 14, 74 10, 82 8" stroke="#2F5D8C" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.4"/>
-    <path d="M28 62 C24 58, 18 56, 12 57" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <path d="M38 50 C40 44, 38 38, 33 34" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <path d="M50 38 C46 34, 42 29, 40 22" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <path d="M62 24 C66 20, 72 18, 78 20" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <ellipse cx="22" cy="68" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.28" transform="rotate(-48 22 68)"/>
-    <ellipse cx="34" cy="56" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.32" transform="rotate(-42 34 56)"/>
-    <ellipse cx="46" cy="43" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 46 43)"/>
-    <ellipse cx="57" cy="30" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.32" transform="rotate(-42 57 30)"/>
-    <ellipse cx="70" cy="18" rx="6.5" ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 70 18)"/>
-    <circle cx="16" cy="57" r="2" fill="#2F5D8C" opacity="0.25"/>
-    <circle cx="35" cy="32" r="2" fill="#2F5D8C" opacity="0.25"/>
-    <circle cx="77" cy="21" r="2" fill="#2F5D8C" opacity="0.25"/>
-    <path d="M14 14 L22 14 L22 22 L30 22 L30 14 L38 14" stroke="#2F5D8C" stroke-width="1.5" fill="none" opacity="0.22"/>
-  </svg>
+<div class="p-10 flex flex-col justify-center flex-grow">
+<h3 class="font-headline-lg text-headline-lg text-primary mb-4">Purity &amp; Craft</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Our frozen yogurt is strained slowly, respecting ancient Mediterranean techniques. No artificial stabilizers, just pure, cultured sheep's milk and wild mountain herbs.</p>
+<a class="inline-flex items-center text-secondary font-label-sm text-label-sm tracking-widest uppercase hover:text-primary transition-colors group/link w-max" href="#">
+                        Discover the Process
+                        <span class="material-symbols-outlined ml-2 text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+</a>
 </div>
-
-<!-- Bottom-Right corner -->
-<div class="corner corner-br">
-  <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
-    <path d="M14 76 C22 64, 38 46, 58 22 C66 14, 74 10, 82 8" stroke="#2F5D8C" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.4"/>
-    <path d="M28 62 C24 58, 18 56, 12 57" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <path d="M38 50 C40 44, 38 38, 33 34" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <path d="M50 38 C46 34, 42 29, 40 22" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <path d="M62 24 C66 20, 72 18, 78 20" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
-    <ellipse cx="22" cy="68" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.28" transform="rotate(-48 22 68)"/>
-    <ellipse cx="34" cy="56" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.32" transform="rotate(-42 34 56)"/>
-    <ellipse cx="46" cy="43" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 46 43)"/>
-    <ellipse cx="57" cy="30" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.32" transform="rotate(-42 57 30)"/>
-    <ellipse cx="70" cy="18" rx="6.5" ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 70 18)"/>
-    <circle cx="16" cy="57" r="2" fill="#2F5D8C" opacity="0.25"/>
-    <circle cx="35" cy="32" r="2" fill="#2F5D8C" opacity="0.25"/>
-    <circle cx="77" cy="21" r="2" fill="#2F5D8C" opacity="0.25"/>
-    <path d="M14 14 L22 14 L22 22 L30 22 L30 14 L38 14" stroke="#2F5D8C" stroke-width="1.5" fill="none" opacity="0.22"/>
-  </svg>
 </div>
-
-<!-- ═══ HERA CIRCULAR STAMPS — LEFT & RIGHT SIDES ═══ -->
-
-<div class="stamp stamp-left">
-  <svg width="62" height="62" viewBox="0 0 62 62" fill="none">
-    <circle cx="31" cy="31" r="28" stroke="#2F5D8C" stroke-width="2" opacity="0.28"/>
-    <circle cx="31" cy="31" r="23" stroke="#2F5D8C" stroke-width="1" stroke-dasharray="3 3" opacity="0.2"/>
-    <!-- Greek key mini pattern around inner ring -->
-    <circle cx="31" cy="31" r="18" fill="rgba(47,93,140,0.04)" stroke="#2F5D8C" stroke-width="0.5" opacity="0.2"/>
-    <!-- HERA text -->
-    <text x="31" y="28" text-anchor="middle" font-family="'Noto Serif', serif" font-size="9" font-weight="700" fill="#2F5D8C" opacity="0.42" letter-spacing="1.5">HERA</text>
-    <!-- Greek decorative cross -->
-    <line x1="24" y1="33" x2="38" y2="33" stroke="#2F5D8C" stroke-width="0.8" opacity="0.25"/>
-    <circle cx="27" cy="33" r="1.2" fill="#2F5D8C" opacity="0.25"/>
-    <circle cx="31" cy="33" r="1.2" fill="#2F5D8C" opacity="0.25"/>
-    <circle cx="35" cy="33" r="1.2" fill="#2F5D8C" opacity="0.25"/>
-    <!-- Small star/asterisk -->
-    <text x="31" y="42" text-anchor="middle" font-size="8" fill="#2F5D8C" opacity="0.22">✦</text>
-  </svg>
+<!-- Small Stacked Cards -->
+<div class="md:col-span-4 flex flex-col gap-6">
+<!-- Flavor Focus -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl shadow-[0_10px_30px_-15px_rgba(47,93,140,0.08)] p-8 flex flex-col justify-between relative overflow-hidden">
+<div>
+<span class="inline-block px-3 py-1 bg-secondary-container/30 text-primary-fixed-variant rounded-full font-label-sm text-[10px] tracking-widest uppercase mb-4">Seasonal</span>
+<h4 class="font-headline-md text-headline-md text-primary mb-2">Wild Fig &amp; Thyme</h4>
 </div>
-
-<div class="stamp stamp-right">
-  <svg width="62" height="62" viewBox="0 0 62 62" fill="none">
-    <circle cx="31" cy="31" r="28" stroke="#2F5D8C" stroke-width="2" opacity="0.28"/>
-    <circle cx="31" cy="31" r="23" stroke="#2F5D8C" stroke-width="1" stroke-dasharray="3 3" opacity="0.2"/>
-    <circle cx="31" cy="31" r="18" fill="rgba(47,93,140,0.04)" stroke="#2F5D8C" stroke-width="0.5" opacity="0.2"/>
-    <text x="31" y="28" text-anchor="middle" font-family="'Noto Serif', serif" font-size="9" font-weight="700" fill="#2F5D8C" opacity="0.42" letter-spacing="1.5">HERA</text>
-    <line x1="24" y1="33" x2="38" y2="33" stroke="#2F5D8C" stroke-width="0.8" opacity="0.25"/>
-    <circle cx="27" cy="33" r="1.2" fill="#2F5D8C" opacity="0.25"/>
-    <circle cx="31" cy="33" r="1.2" fill="#2F5D8C" opacity="0.25"/>
-    <circle cx="35" cy="33" r="1.2" fill="#2F5D8C" opacity="0.25"/>
-    <text x="31" y="42" text-anchor="middle" font-size="8" fill="#2F5D8C" opacity="0.22">✦</text>
-  </svg>
+<p class="font-body-md text-body-md text-on-surface-variant/80 text-sm italic">Sourced from the sun-drenched groves of Peloponnese.</p>
 </div>
-
-<!-- ═══ GREEK VASE — side decorations ═══ -->
-<div class="side-col side-col-left" style="top: 25%; transform: translateY(0);">
-  <svg width="18" height="54" viewBox="0 0 18 54" fill="none">
-    <ellipse cx="9" cy="4"  rx="6" ry="2.5" fill="#2F5D8C"/>
-    <rect x="3" y="4" width="12" height="3" rx="1" fill="#2F5D8C"/>
-    <path d="M5 7 C2 14, 1 24, 3 34 C4 40, 5 46, 4 52" stroke="#2F5D8C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <path d="M13 7 C16 14, 17 24, 15 34 C14 40, 13 46, 14 52" stroke="#2F5D8C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <ellipse cx="9" cy="52" rx="5" ry="2" fill="#2F5D8C"/>
-    <line x1="4" y1="28" x2="14" y2="28" stroke="#2F5D8C" stroke-width="0.8" opacity="0.5"/>
-  </svg>
+<!-- Text Highlight -->
+<div class="flex-1 bg-primary text-on-primary rounded-xl shadow-[0_10px_30px_-15px_rgba(47,93,140,0.2)] p-8 flex flex-col justify-center items-center text-center relative overflow-hidden">
+<span class="material-symbols-outlined text-4xl mb-4 font-light text-on-primary/80">local_florist</span>
+<p class="font-headline-md text-headline-md text-on-primary leading-tight">"A taste of ancient serenity."</p>
 </div>
-<div class="side-col side-col-right" style="top: 25%; transform: translateY(0);">
-  <svg width="18" height="54" viewBox="0 0 18 54" fill="none">
-    <ellipse cx="9" cy="4"  rx="6" ry="2.5" fill="#2F5D8C"/>
-    <rect x="3" y="4" width="12" height="3" rx="1" fill="#2F5D8C"/>
-    <path d="M5 7 C2 14, 1 24, 3 34 C4 40, 5 46, 4 52" stroke="#2F5D8C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <path d="M13 7 C16 14, 17 24, 15 34 C14 40, 13 46, 14 52" stroke="#2F5D8C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <ellipse cx="9" cy="52" rx="5" ry="2" fill="#2F5D8C"/>
-    <line x1="4" y1="28" x2="14" y2="28" stroke="#2F5D8C" stroke-width="0.8" opacity="0.5"/>
-  </svg>
 </div>
-
-<!-- ═══ Greek column icons below vases ═══ -->
-<div class="side-col side-col-left" style="top: 62%; transform: translateY(0);">
-  <svg width="18" height="50" viewBox="0 0 18 50" fill="none">
-    <!-- Capital -->
-    <rect x="1" y="1" width="16" height="3" rx="1" fill="#2F5D8C"/>
-    <rect x="3" y="4" width="12" height="2" rx="1" fill="#2F5D8C"/>
-    <!-- Shaft flutes -->
-    <rect x="5"  y="6" width="2" height="36" rx="1" fill="#2F5D8C"/>
-    <rect x="8"  y="6" width="2" height="36" rx="1" fill="#2F5D8C"/>
-    <rect x="11" y="6" width="2" height="36" rx="1" fill="#2F5D8C"/>
-    <!-- Base -->
-    <rect x="3" y="42" width="12" height="2" rx="1" fill="#2F5D8C"/>
-    <rect x="1" y="44" width="16" height="3" rx="1" fill="#2F5D8C"/>
-  </svg>
+</section>
+<!-- Asymmetric Image & Text -->
+<section class="flex flex-col md:flex-row items-center gap-16 mb-32">
+<div class="w-full md:w-5/12 order-2 md:order-1">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-6">Artisanal Toppings</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">We curate our toppings with the same rigor as our yogurt. From raw honeycomb harvested on Mount Olympus to pistachios from Aegina, every element tells a story of the soil.</p>
+<ul class="space-y-4">
+<li class="flex items-center gap-4">
+<div class="w-1 h-1 bg-secondary rounded-full"></div>
+<span class="font-body-md text-body-md text-on-surface">Raw Thyme Honey</span>
+</li>
+<li class="flex items-center gap-4">
+<div class="w-1 h-1 bg-secondary rounded-full"></div>
+<span class="font-body-md text-body-md text-on-surface">Crushed Aegina Pistachios</span>
+</li>
+<li class="flex items-center gap-4">
+<div class="w-1 h-1 bg-secondary rounded-full"></div>
+<span class="font-body-md text-body-md text-on-surface">Candied Citrus Peel</span>
+</li>
+</ul>
 </div>
-<div class="side-col side-col-right" style="top: 62%; transform: translateY(0);">
-  <svg width="18" height="50" viewBox="0 0 18 50" fill="none">
-    <rect x="1" y="1" width="16" height="3" rx="1" fill="#2F5D8C"/>
-    <rect x="3" y="4" width="12" height="2" rx="1" fill="#2F5D8C"/>
-    <rect x="5"  y="6" width="2" height="36" rx="1" fill="#2F5D8C"/>
-    <rect x="8"  y="6" width="2" height="36" rx="1" fill="#2F5D8C"/>
-    <rect x="11" y="6" width="2" height="36" rx="1" fill="#2F5D8C"/>
-    <rect x="3" y="42" width="12" height="2" rx="1" fill="#2F5D8C"/>
-    <rect x="1" y="44" width="16" height="3" rx="1" fill="#2F5D8C"/>
-  </svg>
+<div class="w-full md:w-7/12 order-1 md:order-2">
+<div class="relative w-full aspect-[4/5] rounded-xl overflow-hidden shadow-[0_20px_40px_-20px_rgba(47,93,140,0.15)]">
+<img alt="Artisanal Honey and Pistachios" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFIvaXD7eiZC51sFlOlvNELeXFu9XpKkcgA7_P2dXPGdkH-BE7t4urJdLSaecAHX41s8y2IjkUeLAm-rc4CE8CdI8zlLPHMtsVCSE9Q1HrbrniiFmz_J4tvX-FD19aGxP4NxqrJoJk-FxCZGGQ-QvkCkg2mlUe3IoZ8NRLeaJNqmNr7ZsPg_c6t6Eo-6rzSQy46IKDLjRm7tSxRYy-364ud8Z0XhJW7qQLcqBfAJbOBrvL-kHg0olTBlRxTf_Xum5tn3nEWxKeNFw"/>
 </div>
-
-
-<!-- ═══════════════════════════════════════════
-     MAIN CONTENT — CHAT UI
-════════════════════════════════════════════ -->
-<div class="page-wrap">
-  <div class="chat-box">
-
-    <!-- ═══ CHAT HEADER ═══ -->
-    <div class="chat-head">
-      <!-- Logo / Avatar -->
-      <div class="head-avatar">
-        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-          <!-- Simplified Greek column icon -->
-          <rect x="2" y="2"  width="26" height="4" rx="1.5" fill="white" opacity="0.9"/>
-          <rect x="6" y="6"  width="4"  height="18" rx="1"   fill="white" opacity="0.85"/>
-          <rect x="13" y="6" width="4"  height="18" rx="1"   fill="white" opacity="0.85"/>
-          <rect x="20" y="6" width="4"  height="18" rx="1"   fill="white" opacity="0.85"/>
-          <rect x="2" y="24" width="26" height="4" rx="1.5" fill="white" opacity="0.9"/>
-        </svg>
-      </div>
-
-      <div class="head-info">
-        <div class="head-name">HERA</div>
-        <div class="head-sub">
-          <span class="online-dot"></span>
-          Helado Griego Artesanal
-        </div>
-      </div>
-
-      <!-- Greek wave icon right side of header -->
-      <svg width="32" height="18" viewBox="0 0 32 18" fill="none" opacity="0.45">
-        <path d="M2 9 C5 3, 9 3, 12 9 C15 15, 19 15, 22 9 C25 3, 29 3, 32 9" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <path d="M2 14 C5 8, 9 8, 12 14 C15 20, 19 20, 22 14 C25 8, 29 8, 32 14" stroke="white" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
-      </svg>
-    </div>
-
-    <!-- Greek meander stripe -->
-    <div class="meander-strip"></div>
-
-    <!-- ═══ CHAT BODY ═══ -->
-    <div class="chat-body">
-
-      <!-- Date separator -->
-      <div class="date-sep"><span>Hoy</span></div>
-
-      <!-- HERA message 1 -->
-      <div class="msg-row">
-        <div class="msg-avatar">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect x="1" y="1"  width="14" height="2.5" rx="0.8" fill="white" opacity="0.9"/>
-            <rect x="3" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
-            <rect x="6.8" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
-            <rect x="10.5" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
-            <rect x="1" y="13.5" width="14" height="2.5" rx="0.8" fill="white" opacity="0.9"/>
-          </svg>
-        </div>
-        <div class="msg-group">
-          <div class="bubble bubble-left">
-            ¡Hola! Soy <strong>HERA</strong> 🏛️ Tu heladería griega artesanal. ¿Qué antojo tienes hoy?
-          </div>
-          <div class="msg-time">11:02 am</div>
-        </div>
-      </div>
-
-      <!-- User message 1 -->
-      <div class="msg-row right">
-        <div class="msg-group">
-          <div class="bubble bubble-right">
-            Quiero ver los sabores del día 🍦
-          </div>
-          <div class="msg-time">11:03 am</div>
-        </div>
-      </div>
-
-      <!-- HERA message 2 -->
-      <div class="msg-row">
-        <div class="msg-avatar">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect x="1" y="1"  width="14" height="2.5" rx="0.8" fill="white" opacity="0.9"/>
-            <rect x="3" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
-            <rect x="6.8" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
-            <rect x="10.5" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
-            <rect x="1" y="13.5" width="14" height="2.5" rx="0.8" fill="white" opacity="0.9"/>
-          </svg>
-        </div>
-        <div class="msg-group">
-          <div class="bubble bubble-left">
-            ¡Claro! ✨ Aquí tienes nuestros sabores frescos de hoy:
-          </div>
-          <div class="msg-time">11:03 am</div>
-        </div>
-      </div>
-
-      <!-- Product cards -->
-      <div class="cards-wrap">
-
-        <div class="product-card">
-          <img
-            class="product-card-img"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlTu-ytaOq5DGS5B1HLfgwm6M54PqbluJtfK6cU-FlDYdIXFHQQSofrfyF-8ATiLbYiPTfG_BgUhzh5zlhoK-YktpXZN3WgRhYPMPCBZE1UdJ5H7sjAcLtwfusgNvgMCntw_UwoYJfDtRVTSL7TpA3Gh78hGXQB5E_ZQtZjcdNyRw63ExogTH-0ppndbYs20XMYOBewmwkeS5xeR1xT9P3gbTJavpfb0FGgYXYpqNcNeSL9Ck8J6PUfkwhVN10gFhSnCG_JmtyKK4"
-            alt="Vainilla y Cookies"
-          />
-          <div class="product-card-body">
-            <div class="product-card-name">Vainilla y Cookies</div>
-            <div class="card-rule"></div>
-          </div>
-        </div>
-
-        <div class="product-card">
-          <img
-            class="product-card-img"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiiDMUx9ez7rAPJi9AQi17ay2_jrgSm6OLFSX9evZx2e1PlQNt6FAs6G_IIlv0KJ2PHPEyKUe52XmJkrmuCyZpIcihnBad6a3m-XGWRw_W08wM7q0jJK8FiYE5oVKb03dJF3Im8-ARohNA1KLa6wBBg5SfRUKxaSNRp73RrPxi0vVvMjvZJ6KVlM0HiR0j4B0p2woRVcW1W6vvxAxmMU6yAMlS0Vp3thE2jAl9jWfYLMADmrSpAhXsoLbRwzCknM1IR23N8kV6deg"
-            alt="Fresa y Granola"
-          />
-          <div class="product-card-body">
-            <div class="product-card-name">Fresa &amp; Granola</div>
-            <div class="card-rule"></div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- User message 2 -->
-      <div class="msg-row right">
-        <div class="msg-group">
-          <div class="bubble bubble-right">
-            ¿Tienen delivery? 🛵
-          </div>
-          <div class="msg-time">11:05 am</div>
-        </div>
-      </div>
-
-      <!-- HERA message 3 with WhatsApp CTA -->
-      <div class="msg-row">
-        <div class="msg-avatar">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect x="1" y="1"  width="14" height="2.5" rx="0.8" fill="white" opacity="0.9"/>
-            <rect x="3" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
-            <rect x="6.8" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
-            <rect x="10.5" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
-            <rect x="1" y="13.5" width="14" height="2.5" rx="0.8" fill="white" opacity="0.9"/>
-          </svg>
-        </div>
-        <div class="msg-group">
-          <div class="bubble bubble-left">
-            ¡Por supuesto! 🚀 Estamos en <strong>Rappi</strong> todos los días de <strong>11am – 9pm</strong>. También puedes escribirnos por WhatsApp para pedidos especiales o corporativos.
-          </div>
-          <a class="wa-btn" href="https://wa.me/51999000000?text=Hola%20HERA!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-            Escribir por WhatsApp
-          </a>
-          <div class="msg-time" style="margin-top:6px;">11:05 am</div>
-        </div>
-      </div>
-
-      <!-- Quick reply chips -->
-      <div class="chips-wrap">
-        <div class="chip">Más sabores</div>
-        <div class="chip">Horarios</div>
-        <div class="chip">Pedir en Rappi</div>
-      </div>
-
-    </div><!-- /chat-body -->
-
-    <!-- ═══ CHAT FOOTER (static) ═══ -->
-    <div class="chat-foot">
-      <div class="chat-input-fake">Escribe tu mensaje…</div>
-      <div class="chat-send">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="white">
-          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-        </svg>
-      </div>
-    </div>
-
-  </div><!-- /chat-box -->
-</div><!-- /page-wrap -->
-
-</body>
-</html>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full pb-24 pt-10 bg-[#FDFBF7] dark:bg-stone-950 border-t border-[#2F5D8C]/5 dark:border-blue-900/10 mt-auto z-40 relative">
+<div class="max-w-[900px] mx-auto flex flex-col items-center space-y-6 px-12">
+<!-- Brand Logo -->
+<div class="text-lg font-light tracking-widest text-[#2F5D8C] dark:text-blue-300 font-headline-xl">HERA</div>
+<!-- Links -->
+<nav class="flex space-x-6">
+<a class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 dark:text-stone-600 hover:text-[#2F5D8C] dark:hover:text-blue-200 transition-colors focus:outline-none focus:text-[#2F5D8C]" href="#">Philosophy</a>
+<a class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 dark:text-stone-600 hover:text-[#2F5D8C] dark:hover:text-blue-200 transition-colors focus:outline-none focus:text-[#2F5D8C]" href="#">Press</a>
+<a class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 dark:text-stone-600 hover:text-[#2F5D8C] dark:hover:text-blue-200 transition-colors focus:outline-none focus:text-[#2F5D8C]" href="#">Inquiries</a>
+<a class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 dark:text-stone-600 hover:text-[#2F5D8C] dark:hover:text-blue-200 transition-colors focus:outline-none focus:text-[#2F5D8C]" href="#">Instagram</a>
+</nav>
+<!-- Copyright Text -->
+<p class="font-serif italic tracking-wide text-xs text-[#2F5D8C]/50 dark:text-stone-600 text-center">
+                © MMXXIV HERA Frozen Yogurt Bar. Crafted with purity.
+            </p>
+</div>
+</footer>
+</body></html>
