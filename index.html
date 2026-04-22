@@ -179,35 +179,47 @@
 .corner-br { background-image: url('./corner-tl.svg'); transform: scale(-1,-1); }
 .corner-bl { background-image: url('./corner-tl.svg'); transform: scaleY(-1); }
 
+/* Page Frame Elements */
+.page-corner { position: fixed; z-index: 50; pointer-events: none; width: 40px; height: 40px; }
+.page-meander-h { position: fixed; z-index: 50; pointer-events: none; height: 40px; left: 40px; right: 40px; }
+.page-meander-v { position: fixed; z-index: 50; pointer-events: none; width: 40px; top: 40px; bottom: 40px; }
+
+.meander-top { top: 0; background-image: url('./meander-h.svg'); background-repeat: repeat-x; background-size: 80px 40px; }
+.meander-bottom { bottom: 0; background-image: url('./meander-h.svg'); background-repeat: repeat-x; background-size: 80px 40px; }
+.meander-left { left: 0; background-image: url('./meander-v.svg'); background-repeat: repeat-y; background-size: 40px 80px; }
+.meander-right { right: 0; background-image: url('./meander-v.svg'); background-repeat: repeat-y; background-size: 40px 80px; }
+
 /* Mobile Optimizations */
 @media (max-width: 768px) {
-    .meander-top, .meander-bottom {
-        height: 25px !important;
-        background-size: 50px 25px !important;
-    }
-    .meander-left, .meander-right {
-        width: 25px !important;
-        background-size: 25px 50px !important;
-    }
-    .corner-tl, .corner-tr, .corner-br, .corner-bl {
-        width: 25px !important;
-        height: 25px !important;
-    }
-    .mobile-frame-top { top: 25px !important; }
-    .mobile-frame-bottom { bottom: 25px !important; }
-    .mobile-frame-left { left: 25px !important; }
-    .mobile-frame-right { right: 25px !important; }
-    .mobile-canvas-padding { padding: 40px 30px !important; }
+    .page-corner { width: 16px; height: 16px; }
+    .page-meander-h { height: 16px; left: 16px; right: 16px; }
+    .page-meander-v { width: 16px; top: 16px; bottom: 16px; }
+    
+    .meander-top, .meander-bottom { background-size: 32px 16px; }
+    .meander-left, .meander-right { background-size: 16px 32px; }
+    
+    .mobile-canvas-padding { padding: 40px 20px !important; }
 }
+
+/* Hide scrollbar for nav */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* Image Greek Frames */
 .greek-img-wrapper {
     position: relative;
-    padding: 24px;
+    padding: 12px;
     background: #FDFBF7;
-    border-radius: 8px;
-    box-shadow: 0 25px 60px -15px rgba(47, 93, 140, 0.4);
+    border-radius: 4px;
+    box-shadow: 0 15px 40px -10px rgba(47, 93, 140, 0.3);
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease;
+}
+@media (min-width: 768px) {
+    .greek-img-wrapper {
+        padding: 24px;
+        border-radius: 8px;
+        box-shadow: 0 25px 60px -15px rgba(47, 93, 140, 0.4);
+    }
 }
 .greek-img-wrapper:hover {
     transform: translateY(-5px);
@@ -215,29 +227,42 @@
 }
 .greek-img-wrapper .top-border, .greek-img-wrapper .bottom-border {
     position: absolute;
-    left: 24px; right: 24px; height: 24px;
+    left: 12px; right: 12px; height: 12px;
     background: url('./meander-h.svg') repeat-x;
-    background-size: 48px 24px;
+    background-size: 24px 12px;
     pointer-events: none;
+}
+@media (min-width: 768px) {
+    .greek-img-wrapper .top-border, .greek-img-wrapper .bottom-border {
+        left: 24px; right: 24px; height: 24px; background-size: 48px 24px;
+    }
 }
 .greek-img-wrapper .top-border { top: 0; }
 .greek-img-wrapper .bottom-border { bottom: 0; }
 .greek-img-wrapper .left-border, .greek-img-wrapper .right-border {
     position: absolute;
-    top: 24px; bottom: 24px; width: 24px;
+    top: 12px; bottom: 12px; width: 12px;
     background: url('./meander-v.svg') repeat-y;
-    background-size: 24px 48px;
+    background-size: 12px 24px;
     pointer-events: none;
+}
+@media (min-width: 768px) {
+    .greek-img-wrapper .left-border, .greek-img-wrapper .right-border {
+        top: 24px; bottom: 24px; width: 24px; background-size: 24px 48px;
+    }
 }
 .greek-img-wrapper .left-border { left: 0; }
 .greek-img-wrapper .right-border { right: 0; }
 .greek-img-wrapper .corner-img {
     position: absolute;
-    width: 24px; height: 24px;
+    width: 12px; height: 12px;
     background: url('./corner-tl.svg');
     background-size: contain;
     z-index: 10;
     pointer-events: none;
+}
+@media (min-width: 768px) {
+    .greek-img-wrapper .corner-img { width: 24px; height: 24px; }
 }
 .greek-img-wrapper .corner-tl-img { top: 0; left: 0; }
 .greek-img-wrapper .corner-tr-img { top: 0; right: 0; transform: scaleX(-1); }
@@ -361,25 +386,23 @@
 </head>
 <body class="bg-background text-on-surface antialiased font-body-md texture-bg min-h-screen relative flex flex-col">
 <!-- Meander Frame -->
-<!-- Corners -->
-<div class="fixed top-0 left-0 w-[50px] h-[50px] corner corner-tl z-50 pointer-events-none"></div>
-<div class="fixed top-0 right-0 w-[50px] h-[50px] corner corner-tr z-50 pointer-events-none"></div>
-<div class="fixed bottom-0 right-0 w-[50px] h-[50px] corner corner-br z-50 pointer-events-none"></div>
-<div class="fixed bottom-0 left-0 w-[50px] h-[50px] corner corner-bl z-50 pointer-events-none"></div>
-<!-- Edges -->
-<div class="fixed top-0 left-[50px] right-[50px] h-[50px] meander-top z-50 pointer-events-none"></div>
-<div class="fixed bottom-0 left-[50px] right-[50px] h-[50px] meander-bottom z-50 pointer-events-none"></div>
-<div class="fixed top-[50px] bottom-[50px] left-0 w-[50px] meander-left z-50 pointer-events-none"></div>
-<div class="fixed top-[50px] bottom-[50px] right-0 w-[50px] meander-right z-50 pointer-events-none"></div>
+<div class="page-corner corner-tl" style="top: 0; left: 0;"></div>
+<div class="page-corner corner-tr" style="top: 0; right: 0;"></div>
+<div class="page-corner corner-br" style="bottom: 0; right: 0;"></div>
+<div class="page-corner corner-bl" style="bottom: 0; left: 0;"></div>
+<div class="page-meander-h meander-top"></div>
+<div class="page-meander-h meander-bottom"></div>
+<div class="page-meander-v meander-left"></div>
+<div class="page-meander-v meander-right"></div>
 <!-- Header -->
-<header class="fixed top-0 w-full bg-[#FDFBF7]/90 backdrop-blur-md border-b border-[#2F5D8C]/10 z-50 transition-colors duration-500">
-<div class="max-w-[1400px] mx-auto flex justify-center items-center px-12 py-6 md:py-8">
+<header class="fixed top-0 w-full bg-[#FDFBF7]/90 backdrop-blur-md border-b border-[#2F5D8C]/10 z-50 transition-colors duration-500 pt-[25px] md:pt-0">
+<div class="max-w-[1400px] mx-auto flex flex-col items-center px-2 py-3 md:px-12 md:py-8 mt-2 md:mt-0">
 <!-- Navigation Links -->
-<nav class="flex items-center space-x-12">
-<a class="font-label-sm text-label-sm font-serif tracking-[0.2em] uppercase font-medium text-[#2F5D8C] border-b border-[#2F5D8C] pb-1 transition-all duration-500 ease-out hover:opacity-80" href="#carta">Carta</a>
-<a class="font-label-sm text-label-sm font-serif tracking-[0.2em] uppercase font-medium text-[#2F5D8C]/60 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80" href="#horario">Horario</a>
-<a class="font-label-sm text-label-sm font-serif tracking-[0.2em] uppercase font-medium text-[#2F5D8C]/60 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80" href="#ubicacion">Ubicación</a>
-<a class="font-label-sm text-label-sm font-serif tracking-[0.2em] uppercase font-medium text-[#2F5D8C]/60 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80" href="#nosotros">Nosotros</a>
+<nav class="flex w-full overflow-x-auto no-scrollbar justify-start md:justify-center items-center gap-6 md:gap-12 pb-2 md:pb-0 px-4 md:px-0">
+<a class="font-label-sm text-xs md:text-sm font-serif tracking-[0.2em] uppercase font-medium text-[#2F5D8C] border-b border-[#2F5D8C] pb-1 transition-all duration-500 ease-out hover:opacity-80 shrink-0" href="#carta">Carta</a>
+<a class="font-label-sm text-xs md:text-sm font-serif tracking-[0.2em] uppercase font-medium text-[#2F5D8C]/60 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80 shrink-0" href="#horario">Horario</a>
+<a class="font-label-sm text-xs md:text-sm font-serif tracking-[0.2em] uppercase font-medium text-[#2F5D8C]/60 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80 shrink-0" href="#ubicacion">Ubicación</a>
+<a class="font-label-sm text-xs md:text-sm font-serif tracking-[0.2em] uppercase font-medium text-[#2F5D8C]/60 hover:text-[#2F5D8C] transition-all duration-500 ease-out hover:opacity-80 shrink-0" href="#nosotros">Nosotros</a>
 </nav>
 </div>
 </header>
