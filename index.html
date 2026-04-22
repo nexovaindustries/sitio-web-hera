@@ -3,484 +3,804 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Hera — Helado Griego Artesanal</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<title>HERA — Helado Griego Artesanal</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --blue:   #2F5D8C;
-    --blue2:  #1a3d62;
-    --light:  #d2e4ff;
-    --cream:  #f4fafd;
-    --sand:   #eef5f7;
+    --blue:      #2F5D8C;
+    --blue2:     #1a3d62;
+    --blue3:     #0f2540;
+    --light-bg:  #E6EEF7;
+    --chat-r:    #DCE7F5;
+    --white:     #ffffff;
+    --page-bg:   #f0f6fc;
   }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   html { scroll-behavior: smooth; }
-  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); color: #161d1f; overflow-x: hidden; }
-  h1,h2,h3 { font-family: 'Noto Serif', serif; }
 
-  /* Greek meander divider */
-  .meander { width: 100%; height: 16px; background-image: repeating-linear-gradient(90deg, var(--blue) 0, var(--blue) 8px, transparent 8px, transparent 16px), repeating-linear-gradient(0deg, var(--blue) 0, var(--blue) 8px, transparent 8px, transparent 16px); background-size: 32px 16px, 16px 16px; opacity: .18; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--page-bg);
+    min-height: 100vh;
+    color: #1a2a38;
+    padding: 36px 28px;
+  }
 
-  /* Nav */
-  #nav { transition: box-shadow .3s, background .3s; }
-  #nav.scrolled { box-shadow: 0 2px 24px rgba(47,93,140,.10); background: rgba(244,250,253,.96); }
+  /* ═══════════════════════════════════════
+     FULL-PAGE GREEK BORDER FRAME
+  ═══════════════════════════════════════ */
 
-  /* Mobile menu */
-  #mobile-menu { position:fixed; inset:0; z-index:60; background:rgba(244,250,253,.98); backdrop-filter:blur(16px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2rem; opacity:0; pointer-events:none; transition:opacity .3s; }
-  #mobile-menu.open { opacity:1; pointer-events:all; }
-  #mobile-menu a { font-size:1.5rem; font-weight:700; color:var(--blue); }
+  .frame-outer {
+    position: fixed;
+    inset: 10px;
+    border: 5px solid var(--blue);
+    pointer-events: none;
+    z-index: 500;
+    border-radius: 4px;
+  }
 
-  /* Hero */
-  .hero-bg { background: linear-gradient(135deg, #e8f1fb 0%, #f4fafd 50%, #eef5f7 100%); }
+  .frame-inner {
+    position: fixed;
+    inset: 19px;
+    border: 1.5px solid var(--blue);
+    pointer-events: none;
+    z-index: 500;
+    opacity: 0.45;
+    border-radius: 2px;
+  }
 
-  /* Animations */
-  @keyframes float { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-10px); } }
-  .float { animation: float 5s ease-in-out infinite; }
-  @keyframes fadeUp { from{ opacity:0; transform:translateY(32px); } to{ opacity:1; transform:translateY(0); } }
-  .reveal { opacity:0; transform:translateY(32px); transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
-  .reveal.visible { opacity:1; transform:translateY(0); }
+  /* Greek meander lines top & bottom of frame */
+  .frame-meander-top,
+  .frame-meander-bottom {
+    position: fixed;
+    left: 32px;
+    right: 32px;
+    height: 6px;
+    pointer-events: none;
+    z-index: 501;
+    background-image:
+      repeating-linear-gradient(90deg, var(--blue) 0, var(--blue) 4px, transparent 4px, transparent 8px),
+      repeating-linear-gradient(0deg,  var(--blue) 0, var(--blue) 4px, transparent 4px, transparent 8px);
+    background-size: 16px 6px, 8px 6px;
+    opacity: 0.18;
+  }
+  .frame-meander-top    { top: 24px; }
+  .frame-meander-bottom { bottom: 24px; }
 
-  /* Cards */
-  .flavor-card { transition: transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s; }
-  .flavor-card:hover { transform: translateY(-8px); box-shadow: 0 24px 48px rgba(47,93,140,.14); }
-  .flavor-card img { transition: transform .6s ease; }
-  .flavor-card:hover img { transform: scale(1.07); }
+  /* ═══════════════════════════════════════
+     CORNER DECORATIONS — OLIVE BRANCHES
+  ═══════════════════════════════════════ */
 
-  /* Greek border accent */
-  .greek-accent { border-left: 4px solid var(--blue); }
+  .corner {
+    position: fixed;
+    pointer-events: none;
+    z-index: 502;
+    width: 90px;
+    height: 90px;
+  }
+  .corner-tl { top: 8px;    left: 8px;    }
+  .corner-tr { top: 8px;    right: 8px;   transform: scaleX(-1); }
+  .corner-bl { bottom: 8px; left: 8px;    transform: scaleY(-1); }
+  .corner-br { bottom: 8px; right: 8px;   transform: scale(-1);  }
+
+  /* ═══════════════════════════════════════
+     SIDE STAMPS — HERA CIRCULAR SEALS
+  ═══════════════════════════════════════ */
+
+  .stamp {
+    position: fixed;
+    pointer-events: none;
+    z-index: 502;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .stamp-left  { left: 12px; }
+  .stamp-right { right: 12px; }
+
+  /* Side Greek column decorations */
+  .side-col {
+    position: fixed;
+    pointer-events: none;
+    z-index: 501;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.12;
+  }
+  .side-col-left  { left: 5px; }
+  .side-col-right { right: 5px; }
+
+  /* ═══════════════════════════════════════
+     MAIN LAYOUT
+  ═══════════════════════════════════════ */
+
+  .page-wrap {
+    max-width: 500px;
+    margin: 0 auto;
+    min-height: calc(100vh - 72px);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* ═══════════════════════════════════════
+     CHAT CONTAINER
+  ═══════════════════════════════════════ */
+
+  .chat-box {
+    flex: 1;
+    background: var(--white);
+    border-radius: 24px;
+    box-shadow:
+      0 4px 12px rgba(47,93,140,.08),
+      0 16px 48px rgba(47,93,140,.10),
+      0 0 0 1px rgba(47,93,140,.07);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ═══ CHAT HEADER ═══ */
+  .chat-head {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue2) 100%);
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+
+  .head-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .head-info { flex: 1; }
+
+  .head-name {
+    font-family: 'Noto Serif', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.08em;
+  }
+
+  .head-sub {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.72);
+    font-weight: 500;
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .online-dot {
+    width: 7px;
+    height: 7px;
+    background: #4ade80;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Greek meander stripe under header */
+  .meander-strip {
+    height: 8px;
+    flex-shrink: 0;
+    background-image:
+      repeating-linear-gradient(90deg, var(--blue) 0, var(--blue) 4px, transparent 4px, transparent 8px),
+      repeating-linear-gradient(0deg,  var(--blue) 0, var(--blue) 4px, transparent 4px, transparent 8px);
+    background-size: 16px 8px, 8px 8px;
+    opacity: 0.14;
+  }
+
+  /* ═══ CHAT BODY ═══ */
+  .chat-body {
+    flex: 1;
+    padding: 22px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: var(--light-bg);
+    background-image:
+      radial-gradient(ellipse at 15% 15%, rgba(47,93,140,.05) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 85%, rgba(47,93,140,.04) 0%, transparent 55%);
+    overflow-y: auto;
+  }
+
+  /* Date separator */
+  .date-sep {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 4px 0;
+  }
+  .date-sep::before, .date-sep::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(47,93,140,0.2);
+  }
+  .date-sep span {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: rgba(47,93,140,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ═══ MESSAGE ROWS ═══ */
+  .msg-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 9px;
+  }
+  .msg-row.right { flex-direction: row-reverse; }
+
+  .msg-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(47,93,140,0.25);
+  }
+
+  .msg-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 76%;
+  }
+  .msg-row.right .msg-group { align-items: flex-end; }
+
+  /* Bubbles */
+  .bubble {
+    padding: 11px 15px;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    font-weight: 500;
+    word-break: break-word;
+  }
+
+  .bubble-left {
+    background: var(--white);
+    border-radius: 20px 20px 20px 0;
+    box-shadow: 0 2px 10px rgba(47,93,140,.09), 0 1px 3px rgba(47,93,140,.06);
+    color: #1a2a38;
+  }
+
+  .bubble-right {
+    background: var(--chat-r);
+    border-radius: 20px 20px 0 20px;
+    color: var(--blue2);
+    box-shadow: 0 1px 4px rgba(47,93,140,.08);
+  }
+
+  .msg-time {
+    font-size: 0.62rem;
+    color: rgba(47,93,140,0.42);
+    font-weight: 600;
+    padding: 0 3px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ═══ PRODUCT CARDS ═══ */
+  .cards-wrap {
+    padding-left: 39px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .product-card {
+    flex: 1;
+    max-width: 195px;
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow:
+      0 3px 14px rgba(47,93,140,.10),
+      0 1px 4px rgba(47,93,140,.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(47,93,140,.16);
+  }
+
+  .product-card-img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .product-card-body {
+    padding: 10px 12px 12px;
+    text-align: center;
+    background: linear-gradient(180deg, #fff 0%, #f5f9ff 100%);
+  }
+
+  .product-card-name {
+    font-family: 'Noto Serif', serif;
+    font-size: 0.83rem;
+    font-weight: 700;
+    color: var(--blue2);
+    line-height: 1.35;
+  }
+
+  /* Greek horizontal rule under name */
+  .card-rule {
+    width: 28px;
+    height: 2px;
+    background: var(--blue);
+    margin: 6px auto 0;
+    opacity: 0.25;
+    border-radius: 2px;
+  }
+
+  /* ═══ QUICK REPLY CHIPS ═══ */
+  .chips-wrap {
+    padding-left: 39px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .chip {
+    padding: 6px 13px;
+    border-radius: 9999px;
+    border: 1.5px solid rgba(47,93,140,0.4);
+    font-size: 0.77rem;
+    font-weight: 700;
+    color: var(--blue);
+    background: white;
+    cursor: default;
+    letter-spacing: 0.01em;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .chip:hover {
+    background: var(--chat-r);
+    border-color: var(--blue);
+  }
+
+  /* WhatsApp button */
+  .wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 16px;
+    background: #25D366;
+    color: white;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: 9px;
+    width: fit-content;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .wa-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* ═══ CHAT FOOTER ═══ */
+  .chat-foot {
+    padding: 14px 16px;
+    background: white;
+    border-top: 1px solid rgba(47,93,140,0.09);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .chat-input-fake {
+    flex: 1;
+    padding: 11px 16px;
+    border-radius: 9999px;
+    border: 1.5px solid rgba(47,93,140,0.17);
+    font-size: 0.85rem;
+    color: rgba(47,93,140,0.38);
+    background: var(--light-bg);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: default;
+    user-select: none;
+  }
+
+  .chat-send {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(47,93,140,0.25);
+  }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media (max-width: 640px) {
+    body { padding: 12px 8px; }
+    .frame-outer { inset: 6px; border-width: 3px; }
+    .frame-inner { inset: 13px; }
+    .frame-meander-top    { top: 17px; left: 18px; right: 18px; }
+    .frame-meander-bottom { bottom: 17px; left: 18px; right: 18px; }
+    .corner, .stamp, .side-col { display: none; }
+    .cards-wrap { padding-left: 0; }
+    .chips-wrap { padding-left: 0; }
+  }
 </style>
 </head>
 <body>
 
-<!-- ══ MOBILE MENU ══ -->
-<div id="mobile-menu">
-  <button id="close-btn" style="position:absolute;top:1.5rem;right:1.5rem;font-size:2rem;color:var(--blue);background:none;border:none;cursor:pointer;">✕</button>
-  <a href="#sabores" onclick="closeMenu()">Sabores</a>
-  <a href="#precios" onclick="closeMenu()">Precios</a>
-  <a href="#nosotros" onclick="closeMenu()">Nosotros</a>
-  <a href="#delivery" onclick="closeMenu()">Delivery</a>
-  <a href="#delivery" onclick="closeMenu()" style="background:var(--blue);color:#fff;padding:.75rem 2rem;border-radius:9999px;font-size:1rem;">Pedir Ahora</a>
+<!-- ═══════════════════════════════════════════
+     GREEK BORDER FRAME
+════════════════════════════════════════════ -->
+<div class="frame-outer"></div>
+<div class="frame-inner"></div>
+<div class="frame-meander-top"></div>
+<div class="frame-meander-bottom"></div>
+
+<!-- ═══ CORNER OLIVE BRANCHES ═══ -->
+
+<!-- Top-Left corner -->
+<div class="corner corner-tl">
+  <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
+    <!-- Main stem -->
+    <path d="M14 76 C22 64, 38 46, 58 22 C66 14, 74 10, 82 8" stroke="#2F5D8C" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.4"/>
+    <!-- Branch stems -->
+    <path d="M28 62 C24 58, 18 56, 12 57" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <path d="M38 50 C40 44, 38 38, 33 34" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <path d="M50 38 C46 34, 42 29, 40 22" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <path d="M62 24 C66 20, 72 18, 78 20" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <!-- Leaves along stem -->
+    <ellipse cx="22" cy="68" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.28" transform="rotate(-48 22 68)"/>
+    <ellipse cx="34" cy="56" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.32" transform="rotate(-42 34 56)"/>
+    <ellipse cx="46" cy="43" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 46 43)"/>
+    <ellipse cx="57" cy="30" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.32" transform="rotate(-42 57 30)"/>
+    <ellipse cx="70" cy="18" rx="6.5" ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 70 18)"/>
+    <!-- Small berries -->
+    <circle cx="16" cy="57" r="2" fill="#2F5D8C" opacity="0.25"/>
+    <circle cx="35" cy="32" r="2" fill="#2F5D8C" opacity="0.25"/>
+    <circle cx="77" cy="21" r="2" fill="#2F5D8C" opacity="0.25"/>
+    <!-- Corner meander ornament -->
+    <path d="M14 14 L22 14 L22 22 L30 22 L30 14 L38 14" stroke="#2F5D8C" stroke-width="1.5" fill="none" opacity="0.22"/>
+  </svg>
 </div>
 
-<!-- ══ NAV ══ -->
-<nav id="nav" class="sticky top-0 z-50 w-full" style="background:rgba(244,250,253,.85);backdrop-filter:blur(16px);">
-  <div class="max-w-6xl mx-auto flex items-center justify-between px-6 md:px-10 h-18" style="height:72px;">
+<!-- Top-Right corner (mirror) -->
+<div class="corner corner-tr">
+  <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
+    <path d="M14 76 C22 64, 38 46, 58 22 C66 14, 74 10, 82 8" stroke="#2F5D8C" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.4"/>
+    <path d="M28 62 C24 58, 18 56, 12 57" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <path d="M38 50 C40 44, 38 38, 33 34" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <path d="M50 38 C46 34, 42 29, 40 22" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <path d="M62 24 C66 20, 72 18, 78 20" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <ellipse cx="22" cy="68" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.28" transform="rotate(-48 22 68)"/>
+    <ellipse cx="34" cy="56" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.32" transform="rotate(-42 34 56)"/>
+    <ellipse cx="46" cy="43" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 46 43)"/>
+    <ellipse cx="57" cy="30" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.32" transform="rotate(-42 57 30)"/>
+    <ellipse cx="70" cy="18" rx="6.5" ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 70 18)"/>
+    <circle cx="16" cy="57" r="2" fill="#2F5D8C" opacity="0.25"/>
+    <circle cx="35" cy="32" r="2" fill="#2F5D8C" opacity="0.25"/>
+    <circle cx="77" cy="21" r="2" fill="#2F5D8C" opacity="0.25"/>
+    <path d="M14 14 L22 14 L22 22 L30 22 L30 14 L38 14" stroke="#2F5D8C" stroke-width="1.5" fill="none" opacity="0.22"/>
+  </svg>
+</div>
 
-    <!-- Logo -->
-    <a href="#" class="flex items-center gap-2">
-      <span class="font-serif text-2xl font-bold tracking-tight" style="color:var(--blue);font-family:'Noto Serif',serif;">
-        H<span style="display:inline-block;transform:scaleX(-1);letter-spacing:-2px;">Ǝ</span>RA
-      </span>
-      <span class="hidden sm:block text-xs font-semibold tracking-[.15em] uppercase" style="color:var(--blue);opacity:.7;">Helado Griego</span>
-    </a>
+<!-- Bottom-Left corner (flip vertical) -->
+<div class="corner corner-bl">
+  <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
+    <path d="M14 76 C22 64, 38 46, 58 22 C66 14, 74 10, 82 8" stroke="#2F5D8C" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.4"/>
+    <path d="M28 62 C24 58, 18 56, 12 57" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <path d="M38 50 C40 44, 38 38, 33 34" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <path d="M50 38 C46 34, 42 29, 40 22" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <path d="M62 24 C66 20, 72 18, 78 20" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <ellipse cx="22" cy="68" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.28" transform="rotate(-48 22 68)"/>
+    <ellipse cx="34" cy="56" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.32" transform="rotate(-42 34 56)"/>
+    <ellipse cx="46" cy="43" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 46 43)"/>
+    <ellipse cx="57" cy="30" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.32" transform="rotate(-42 57 30)"/>
+    <ellipse cx="70" cy="18" rx="6.5" ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 70 18)"/>
+    <circle cx="16" cy="57" r="2" fill="#2F5D8C" opacity="0.25"/>
+    <circle cx="35" cy="32" r="2" fill="#2F5D8C" opacity="0.25"/>
+    <circle cx="77" cy="21" r="2" fill="#2F5D8C" opacity="0.25"/>
+    <path d="M14 14 L22 14 L22 22 L30 22 L30 14 L38 14" stroke="#2F5D8C" stroke-width="1.5" fill="none" opacity="0.22"/>
+  </svg>
+</div>
 
-    <!-- Desktop links -->
-    <div class="hidden md:flex items-center gap-8 text-sm font-semibold" style="color:var(--blue);">
-      <a href="#sabores"   class="hover:opacity-70 transition-opacity">Sabores</a>
-      <a href="#precios"   class="hover:opacity-70 transition-opacity">Precios</a>
-      <a href="#nosotros"  class="hover:opacity-70 transition-opacity">Nosotros</a>
-      <a href="#delivery"  class="hover:opacity-70 transition-opacity">Delivery</a>
-      <a href="#delivery"  class="px-6 py-2.5 rounded-full text-white font-bold transition-all hover:scale-105 hover:opacity-90" style="background:var(--blue);">Pedir Ahora</a>
-    </div>
+<!-- Bottom-Right corner -->
+<div class="corner corner-br">
+  <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
+    <path d="M14 76 C22 64, 38 46, 58 22 C66 14, 74 10, 82 8" stroke="#2F5D8C" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.4"/>
+    <path d="M28 62 C24 58, 18 56, 12 57" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <path d="M38 50 C40 44, 38 38, 33 34" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <path d="M50 38 C46 34, 42 29, 40 22" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <path d="M62 24 C66 20, 72 18, 78 20" stroke="#2F5D8C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3"/>
+    <ellipse cx="22" cy="68" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.28" transform="rotate(-48 22 68)"/>
+    <ellipse cx="34" cy="56" rx="7.5" ry="3.5" fill="#2F5D8C" opacity="0.32" transform="rotate(-42 34 56)"/>
+    <ellipse cx="46" cy="43" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 46 43)"/>
+    <ellipse cx="57" cy="30" rx="7"   ry="3"   fill="#2F5D8C" opacity="0.32" transform="rotate(-42 57 30)"/>
+    <ellipse cx="70" cy="18" rx="6.5" ry="3"   fill="#2F5D8C" opacity="0.28" transform="rotate(-48 70 18)"/>
+    <circle cx="16" cy="57" r="2" fill="#2F5D8C" opacity="0.25"/>
+    <circle cx="35" cy="32" r="2" fill="#2F5D8C" opacity="0.25"/>
+    <circle cx="77" cy="21" r="2" fill="#2F5D8C" opacity="0.25"/>
+    <path d="M14 14 L22 14 L22 22 L30 22 L30 14 L38 14" stroke="#2F5D8C" stroke-width="1.5" fill="none" opacity="0.22"/>
+  </svg>
+</div>
 
-    <!-- Hamburger -->
-    <button onclick="openMenu()" class="md:hidden p-2" style="color:var(--blue);">
-      <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-        <line x1="4" y1="8"  x2="24" y2="8"/>
-        <line x1="4" y1="14" x2="24" y2="14"/>
-        <line x1="4" y1="20" x2="24" y2="20"/>
+<!-- ═══ HERA CIRCULAR STAMPS — LEFT & RIGHT SIDES ═══ -->
+
+<div class="stamp stamp-left">
+  <svg width="62" height="62" viewBox="0 0 62 62" fill="none">
+    <circle cx="31" cy="31" r="28" stroke="#2F5D8C" stroke-width="2" opacity="0.28"/>
+    <circle cx="31" cy="31" r="23" stroke="#2F5D8C" stroke-width="1" stroke-dasharray="3 3" opacity="0.2"/>
+    <!-- Greek key mini pattern around inner ring -->
+    <circle cx="31" cy="31" r="18" fill="rgba(47,93,140,0.04)" stroke="#2F5D8C" stroke-width="0.5" opacity="0.2"/>
+    <!-- HERA text -->
+    <text x="31" y="28" text-anchor="middle" font-family="'Noto Serif', serif" font-size="9" font-weight="700" fill="#2F5D8C" opacity="0.42" letter-spacing="1.5">HERA</text>
+    <!-- Greek decorative cross -->
+    <line x1="24" y1="33" x2="38" y2="33" stroke="#2F5D8C" stroke-width="0.8" opacity="0.25"/>
+    <circle cx="27" cy="33" r="1.2" fill="#2F5D8C" opacity="0.25"/>
+    <circle cx="31" cy="33" r="1.2" fill="#2F5D8C" opacity="0.25"/>
+    <circle cx="35" cy="33" r="1.2" fill="#2F5D8C" opacity="0.25"/>
+    <!-- Small star/asterisk -->
+    <text x="31" y="42" text-anchor="middle" font-size="8" fill="#2F5D8C" opacity="0.22">✦</text>
+  </svg>
+</div>
+
+<div class="stamp stamp-right">
+  <svg width="62" height="62" viewBox="0 0 62 62" fill="none">
+    <circle cx="31" cy="31" r="28" stroke="#2F5D8C" stroke-width="2" opacity="0.28"/>
+    <circle cx="31" cy="31" r="23" stroke="#2F5D8C" stroke-width="1" stroke-dasharray="3 3" opacity="0.2"/>
+    <circle cx="31" cy="31" r="18" fill="rgba(47,93,140,0.04)" stroke="#2F5D8C" stroke-width="0.5" opacity="0.2"/>
+    <text x="31" y="28" text-anchor="middle" font-family="'Noto Serif', serif" font-size="9" font-weight="700" fill="#2F5D8C" opacity="0.42" letter-spacing="1.5">HERA</text>
+    <line x1="24" y1="33" x2="38" y2="33" stroke="#2F5D8C" stroke-width="0.8" opacity="0.25"/>
+    <circle cx="27" cy="33" r="1.2" fill="#2F5D8C" opacity="0.25"/>
+    <circle cx="31" cy="33" r="1.2" fill="#2F5D8C" opacity="0.25"/>
+    <circle cx="35" cy="33" r="1.2" fill="#2F5D8C" opacity="0.25"/>
+    <text x="31" y="42" text-anchor="middle" font-size="8" fill="#2F5D8C" opacity="0.22">✦</text>
+  </svg>
+</div>
+
+<!-- ═══ GREEK VASE — side decorations ═══ -->
+<div class="side-col side-col-left" style="top: 25%; transform: translateY(0);">
+  <svg width="18" height="54" viewBox="0 0 18 54" fill="none">
+    <ellipse cx="9" cy="4"  rx="6" ry="2.5" fill="#2F5D8C"/>
+    <rect x="3" y="4" width="12" height="3" rx="1" fill="#2F5D8C"/>
+    <path d="M5 7 C2 14, 1 24, 3 34 C4 40, 5 46, 4 52" stroke="#2F5D8C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M13 7 C16 14, 17 24, 15 34 C14 40, 13 46, 14 52" stroke="#2F5D8C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="9" cy="52" rx="5" ry="2" fill="#2F5D8C"/>
+    <line x1="4" y1="28" x2="14" y2="28" stroke="#2F5D8C" stroke-width="0.8" opacity="0.5"/>
+  </svg>
+</div>
+<div class="side-col side-col-right" style="top: 25%; transform: translateY(0);">
+  <svg width="18" height="54" viewBox="0 0 18 54" fill="none">
+    <ellipse cx="9" cy="4"  rx="6" ry="2.5" fill="#2F5D8C"/>
+    <rect x="3" y="4" width="12" height="3" rx="1" fill="#2F5D8C"/>
+    <path d="M5 7 C2 14, 1 24, 3 34 C4 40, 5 46, 4 52" stroke="#2F5D8C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M13 7 C16 14, 17 24, 15 34 C14 40, 13 46, 14 52" stroke="#2F5D8C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="9" cy="52" rx="5" ry="2" fill="#2F5D8C"/>
+    <line x1="4" y1="28" x2="14" y2="28" stroke="#2F5D8C" stroke-width="0.8" opacity="0.5"/>
+  </svg>
+</div>
+
+<!-- ═══ Greek column icons below vases ═══ -->
+<div class="side-col side-col-left" style="top: 62%; transform: translateY(0);">
+  <svg width="18" height="50" viewBox="0 0 18 50" fill="none">
+    <!-- Capital -->
+    <rect x="1" y="1" width="16" height="3" rx="1" fill="#2F5D8C"/>
+    <rect x="3" y="4" width="12" height="2" rx="1" fill="#2F5D8C"/>
+    <!-- Shaft flutes -->
+    <rect x="5"  y="6" width="2" height="36" rx="1" fill="#2F5D8C"/>
+    <rect x="8"  y="6" width="2" height="36" rx="1" fill="#2F5D8C"/>
+    <rect x="11" y="6" width="2" height="36" rx="1" fill="#2F5D8C"/>
+    <!-- Base -->
+    <rect x="3" y="42" width="12" height="2" rx="1" fill="#2F5D8C"/>
+    <rect x="1" y="44" width="16" height="3" rx="1" fill="#2F5D8C"/>
+  </svg>
+</div>
+<div class="side-col side-col-right" style="top: 62%; transform: translateY(0);">
+  <svg width="18" height="50" viewBox="0 0 18 50" fill="none">
+    <rect x="1" y="1" width="16" height="3" rx="1" fill="#2F5D8C"/>
+    <rect x="3" y="4" width="12" height="2" rx="1" fill="#2F5D8C"/>
+    <rect x="5"  y="6" width="2" height="36" rx="1" fill="#2F5D8C"/>
+    <rect x="8"  y="6" width="2" height="36" rx="1" fill="#2F5D8C"/>
+    <rect x="11" y="6" width="2" height="36" rx="1" fill="#2F5D8C"/>
+    <rect x="3" y="42" width="12" height="2" rx="1" fill="#2F5D8C"/>
+    <rect x="1" y="44" width="16" height="3" rx="1" fill="#2F5D8C"/>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     MAIN CONTENT — CHAT UI
+════════════════════════════════════════════ -->
+<div class="page-wrap">
+  <div class="chat-box">
+
+    <!-- ═══ CHAT HEADER ═══ -->
+    <div class="chat-head">
+      <!-- Logo / Avatar -->
+      <div class="head-avatar">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+          <!-- Simplified Greek column icon -->
+          <rect x="2" y="2"  width="26" height="4" rx="1.5" fill="white" opacity="0.9"/>
+          <rect x="6" y="6"  width="4"  height="18" rx="1"   fill="white" opacity="0.85"/>
+          <rect x="13" y="6" width="4"  height="18" rx="1"   fill="white" opacity="0.85"/>
+          <rect x="20" y="6" width="4"  height="18" rx="1"   fill="white" opacity="0.85"/>
+          <rect x="2" y="24" width="26" height="4" rx="1.5" fill="white" opacity="0.9"/>
+        </svg>
+      </div>
+
+      <div class="head-info">
+        <div class="head-name">HERA</div>
+        <div class="head-sub">
+          <span class="online-dot"></span>
+          Helado Griego Artesanal
+        </div>
+      </div>
+
+      <!-- Greek wave icon right side of header -->
+      <svg width="32" height="18" viewBox="0 0 32 18" fill="none" opacity="0.45">
+        <path d="M2 9 C5 3, 9 3, 12 9 C15 15, 19 15, 22 9 C25 3, 29 3, 32 9" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M2 14 C5 8, 9 8, 12 14 C15 20, 19 20, 22 14 C25 8, 29 8, 32 14" stroke="white" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
       </svg>
-    </button>
-  </div>
-</nav>
+    </div>
 
+    <!-- Greek meander stripe -->
+    <div class="meander-strip"></div>
 
-<!-- ══ HERO ══ -->
-<section class="hero-bg relative overflow-hidden" style="min-height:90vh;display:flex;align-items:center;">
+    <!-- ═══ CHAT BODY ═══ -->
+    <div class="chat-body">
 
-  <!-- Decorative circles -->
-  <div style="position:absolute;width:600px;height:600px;border-radius:50%;background:rgba(47,93,140,.05);top:-200px;right:-200px;"></div>
-  <div style="position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(47,93,140,.04);bottom:-100px;left:-100px;"></div>
+      <!-- Date separator -->
+      <div class="date-sep"><span>Hoy</span></div>
 
-  <!-- Greek columns decorative lines -->
-  <div style="position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,transparent,var(--blue),transparent);opacity:.12;"></div>
-  <div style="position:absolute;right:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,transparent,var(--blue),transparent);opacity:.12;"></div>
+      <!-- HERA message 1 -->
+      <div class="msg-row">
+        <div class="msg-avatar">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="1" y="1"  width="14" height="2.5" rx="0.8" fill="white" opacity="0.9"/>
+            <rect x="3" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
+            <rect x="6.8" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
+            <rect x="10.5" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
+            <rect x="1" y="13.5" width="14" height="2.5" rx="0.8" fill="white" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="msg-group">
+          <div class="bubble bubble-left">
+            ¡Hola! Soy <strong>HERA</strong> 🏛️ Tu heladería griega artesanal. ¿Qué antojo tienes hoy?
+          </div>
+          <div class="msg-time">11:02 am</div>
+        </div>
+      </div>
 
-  <div class="max-w-6xl mx-auto px-6 md:px-10 py-20 w-full">
-    <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+      <!-- User message 1 -->
+      <div class="msg-row right">
+        <div class="msg-group">
+          <div class="bubble bubble-right">
+            Quiero ver los sabores del día 🍦
+          </div>
+          <div class="msg-time">11:03 am</div>
+        </div>
+      </div>
 
-      <!-- Text -->
-      <div class="flex-1 text-center md:text-left">
-        <div class="reveal inline-block text-xs font-bold px-4 py-1.5 rounded-full mb-6 tracking-widest uppercase" style="background:rgba(47,93,140,.1);color:var(--blue);">🇬🇷 Artesanal · Fresco · Natural</div>
-        <h1 class="reveal font-bold leading-tight mb-6" style="font-size:clamp(2.4rem,6vw,4.2rem);color:var(--blue2);transition-delay:.08s;">
-          El helado griego<br/>más <em style="color:var(--blue);font-style:italic;">cremoso</em><br/>de la ciudad
-        </h1>
-        <p class="reveal font-medium text-lg mb-10 leading-relaxed max-w-lg mx-auto md:mx-0" style="color:#3d5a70;transition-delay:.16s;">
-          Elaborado con yogur griego auténtico, sin colorantes artificiales y con los mejores ingredientes. Una experiencia diferente en cada cucharada.
-        </p>
-        <div class="reveal flex flex-wrap gap-4 justify-center md:justify-start" style="transition-delay:.24s;">
-          <a href="#sabores" class="font-bold px-8 py-4 rounded-full text-white shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300" style="background:var(--blue);">
-            Ver Sabores
+      <!-- HERA message 2 -->
+      <div class="msg-row">
+        <div class="msg-avatar">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="1" y="1"  width="14" height="2.5" rx="0.8" fill="white" opacity="0.9"/>
+            <rect x="3" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
+            <rect x="6.8" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
+            <rect x="10.5" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
+            <rect x="1" y="13.5" width="14" height="2.5" rx="0.8" fill="white" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="msg-group">
+          <div class="bubble bubble-left">
+            ¡Claro! ✨ Aquí tienes nuestros sabores frescos de hoy:
+          </div>
+          <div class="msg-time">11:03 am</div>
+        </div>
+      </div>
+
+      <!-- Product cards -->
+      <div class="cards-wrap">
+
+        <div class="product-card">
+          <img
+            class="product-card-img"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlTu-ytaOq5DGS5B1HLfgwm6M54PqbluJtfK6cU-FlDYdIXFHQQSofrfyF-8ATiLbYiPTfG_BgUhzh5zlhoK-YktpXZN3WgRhYPMPCBZE1UdJ5H7sjAcLtwfusgNvgMCntw_UwoYJfDtRVTSL7TpA3Gh78hGXQB5E_ZQtZjcdNyRw63ExogTH-0ppndbYs20XMYOBewmwkeS5xeR1xT9P3gbTJavpfb0FGgYXYpqNcNeSL9Ck8J6PUfkwhVN10gFhSnCG_JmtyKK4"
+            alt="Vainilla y Cookies"
+          />
+          <div class="product-card-body">
+            <div class="product-card-name">Vainilla y Cookies</div>
+            <div class="card-rule"></div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <img
+            class="product-card-img"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiiDMUx9ez7rAPJi9AQi17ay2_jrgSm6OLFSX9evZx2e1PlQNt6FAs6G_IIlv0KJ2PHPEyKUe52XmJkrmuCyZpIcihnBad6a3m-XGWRw_W08wM7q0jJK8FiYE5oVKb03dJF3Im8-ARohNA1KLa6wBBg5SfRUKxaSNRp73RrPxi0vVvMjvZJ6KVlM0HiR0j4B0p2woRVcW1W6vvxAxmMU6yAMlS0Vp3thE2jAl9jWfYLMADmrSpAhXsoLbRwzCknM1IR23N8kV6deg"
+            alt="Fresa y Granola"
+          />
+          <div class="product-card-body">
+            <div class="product-card-name">Fresa &amp; Granola</div>
+            <div class="card-rule"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- User message 2 -->
+      <div class="msg-row right">
+        <div class="msg-group">
+          <div class="bubble bubble-right">
+            ¿Tienen delivery? 🛵
+          </div>
+          <div class="msg-time">11:05 am</div>
+        </div>
+      </div>
+
+      <!-- HERA message 3 with WhatsApp CTA -->
+      <div class="msg-row">
+        <div class="msg-avatar">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="1" y="1"  width="14" height="2.5" rx="0.8" fill="white" opacity="0.9"/>
+            <rect x="3" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
+            <rect x="6.8" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
+            <rect x="10.5" y="3.5" width="2.5" height="10" rx="0.8" fill="white" opacity="0.85"/>
+            <rect x="1" y="13.5" width="14" height="2.5" rx="0.8" fill="white" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="msg-group">
+          <div class="bubble bubble-left">
+            ¡Por supuesto! 🚀 Estamos en <strong>Rappi</strong> todos los días de <strong>11am – 9pm</strong>. También puedes escribirnos por WhatsApp para pedidos especiales o corporativos.
+          </div>
+          <a class="wa-btn" href="https://wa.me/51999000000?text=Hola%20HERA!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Escribir por WhatsApp
           </a>
-          <a href="#delivery" class="font-bold px-8 py-4 rounded-full border-2 hover:scale-105 transition-all duration-300" style="border-color:var(--blue);color:var(--blue);">
-            🛵 Pedir Delivery
-          </a>
-        </div>
-        <!-- Stats -->
-        <div class="reveal flex gap-8 justify-center md:justify-start mt-12" style="transition-delay:.32s;">
-          <div class="text-center">
-            <div class="font-bold text-2xl" style="color:var(--blue);font-family:'Noto Serif',serif;">100%</div>
-            <div class="text-xs font-semibold uppercase tracking-wider mt-1" style="color:#3d5a70;">Natural</div>
-          </div>
-          <div style="width:1px;background:rgba(47,93,140,.2);"></div>
-          <div class="text-center">
-            <div class="font-bold text-2xl" style="color:var(--blue);font-family:'Noto Serif',serif;">+8</div>
-            <div class="text-xs font-semibold uppercase tracking-wider mt-1" style="color:#3d5a70;">Sabores</div>
-          </div>
-          <div style="width:1px;background:rgba(47,93,140,.2);"></div>
-          <div class="text-center">
-            <div class="font-bold text-2xl" style="color:var(--blue);font-family:'Noto Serif',serif;">Rappi</div>
-            <div class="text-xs font-semibold uppercase tracking-wider mt-1" style="color:#3d5a70;">Delivery</div>
-          </div>
+          <div class="msg-time" style="margin-top:6px;">11:05 am</div>
         </div>
       </div>
 
-      <!-- Hero image / visual -->
-      <div class="flex-1 flex justify-center">
-        <div class="float relative" style="max-width:420px;width:100%;">
-          <!-- Greek frame -->
-          <div style="position:absolute;inset:-16px;border:3px solid var(--blue);opacity:.15;border-radius:2rem;"></div>
-          <div style="position:absolute;inset:-8px;border:1px solid var(--blue);opacity:.1;border-radius:1.75rem;"></div>
-          <div style="border-radius:1.5rem;overflow:hidden;box-shadow:0 32px 80px rgba(47,93,140,.18);">
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlTu-ytaOq5DGS5B1HLfgwm6M54PqbluJtfK6cU-FlDYdIXFHQQSofrfyF-8ATiLbYiPTfG_BgUhzh5zlhoK-YktpXZN3WgRhYPMPCBZE1UdJ5H7sjAcLtwfusgNvgMCntw_UwoYJfDtRVTSL7TpA3Gh78hGXQB5E_ZQtZjcdNyRw63ExogTH-0ppndbYs20XMYOBewmwkeS5xeR1xT9P3gbTJavpfb0FGgYXYpqNcNeSL9Ck8J6PUfkwhVN10gFhSnCG_JmtyKK4"
-              alt="Helado griego artesanal Hera"
-              style="width:100%;height:380px;object-fit:cover;display:block;"
-            />
-          </div>
-          <!-- Badge -->
-          <div style="position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);background:white;border-radius:9999px;padding:.6rem 1.4rem;box-shadow:0 8px 32px rgba(47,93,140,.15);white-space:nowrap;border:1px solid rgba(47,93,140,.12);">
-            <span style="font-size:.8rem;font-weight:700;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;">✨ Hecho con yogur griego real</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ MEANDER DIVIDER ══ -->
-<div class="meander my-0"></div>
-
-
-<!-- ══ SABORES ══ -->
-<section id="sabores" style="padding:6rem 1.5rem;background:var(--cream);">
-  <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-16 reveal">
-      <span class="inline-block text-xs font-bold px-4 py-1.5 rounded-full mb-4 tracking-widest uppercase" style="background:rgba(47,93,140,.1);color:var(--blue);">Nuestros Sabores</span>
-      <h2 class="font-bold mb-4" style="font-size:clamp(2rem,4vw,3rem);color:var(--blue2);">Cada cucharada,<br/><em style="color:var(--blue);">una experiencia</em></h2>
-      <p class="font-medium text-lg max-w-lg mx-auto" style="color:#3d5a70;">Sabores del día elaborados cada mañana con ingredientes frescos.</p>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-      <!-- Sabor 1 -->
-      <div class="flavor-card reveal rounded-2xl overflow-hidden bg-white" style="box-shadow:0 4px 24px rgba(47,93,140,.08);transition-delay:.04s;">
-        <div style="height:200px;overflow:hidden;">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlTu-ytaOq5DGS5B1HLfgwm6M54PqbluJtfK6cU-FlDYdIXFHQQSofrfyF-8ATiLbYiPTfG_BgUhzh5zlhoK-YktpXZN3WgRhYPMPCBZE1UdJ5H7sjAcLtwfusgNvgMCntw_UwoYJfDtRVTSL7TpA3Gh78hGXQB5E_ZQtZjcdNyRw63ExogTH-0ppndbYs20XMYOBewmwkeS5xeR1xT9P3gbTJavpfb0FGgYXYpqNcNeSL9Ck8J6PUfkwhVN10gFhSnCG_JmtyKK4" alt="Vainilla y Cookies" style="width:100%;height:100%;object-fit:cover;"/>
-        </div>
-        <div class="p-5 text-center">
-          <h3 class="font-bold text-lg mb-1" style="color:var(--blue2);">Vainilla y Cookies</h3>
-          <p class="text-sm mb-3" style="color:#5a7a90;">Vainilla de Madagascar con trozos de galleta</p>
-          <span class="font-bold text-base" style="color:var(--blue);">Desde S/ 8.90</span>
-        </div>
+      <!-- Quick reply chips -->
+      <div class="chips-wrap">
+        <div class="chip">Más sabores</div>
+        <div class="chip">Horarios</div>
+        <div class="chip">Pedir en Rappi</div>
       </div>
 
-      <!-- Sabor 2 -->
-      <div class="flavor-card reveal rounded-2xl overflow-hidden bg-white" style="box-shadow:0 4px 24px rgba(47,93,140,.08);transition-delay:.1s;">
-        <div style="height:200px;overflow:hidden;">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiiDMUx9ez7rAPJi9AQi17ay2_jrgSm6OLFSX9evZx2e1PlQNt6FAs6G_IIlv0KJ2PHPEyKUe52XmJkrmuCyZpIcihnBad6a3m-XGWRw_W08wM7q0jJK8FiYE5oVKb03dJF3Im8-ARohNA1KLa6wBBg5SfRUKxaSNRp73RrPxi0vVvMjvZJ6KVlM0HiR0j4B0p2woRVcW1W6vvxAxmMU6yAMlS0Vp3thE2jAl9jWfYLMADmrSpAhXsoLbRwzCknM1IR23N8kV6deg" alt="Fresa y Granola" style="width:100%;height:100%;object-fit:cover;"/>
-        </div>
-        <div class="p-5 text-center">
-          <h3 class="font-bold text-lg mb-1" style="color:var(--blue2);">Fresa &amp; Granola</h3>
-          <p class="text-sm mb-3" style="color:#5a7a90;">Fresas frescas con granola artesanal crujiente</p>
-          <span class="font-bold text-base" style="color:var(--blue);">Desde S/ 8.90</span>
-        </div>
-      </div>
+    </div><!-- /chat-body -->
 
-      <!-- Sabor 3 (placeholder elegante) -->
-      <div class="flavor-card reveal rounded-2xl overflow-hidden bg-white" style="box-shadow:0 4px 24px rgba(47,93,140,.08);transition-delay:.16s;">
-        <div style="height:200px;overflow:hidden;background:linear-gradient(135deg,#c8a97a,#e8d5b0);display:flex;align-items:center;justify-content:center;">
-          <div style="text-align:center;color:white;">
-            <div style="font-size:3rem;">🍯</div>
-            <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;margin-top:.5rem;opacity:.9;">MIEL &amp; NUEZ</div>
-          </div>
-        </div>
-        <div class="p-5 text-center">
-          <h3 class="font-bold text-lg mb-1" style="color:var(--blue2);">Miel &amp; Nuez</h3>
-          <p class="text-sm mb-3" style="color:#5a7a90;">Miel griega con nueces tostadas al horno</p>
-          <span class="font-bold text-base" style="color:var(--blue);">Desde S/ 8.90</span>
-        </div>
-      </div>
-
-      <!-- Sabor 4 (placeholder elegante) -->
-      <div class="flavor-card reveal rounded-2xl overflow-hidden bg-white" style="box-shadow:0 4px 24px rgba(47,93,140,.08);transition-delay:.22s;">
-        <div style="height:200px;overflow:hidden;background:linear-gradient(135deg,#5a8a6a,#8dbfa0);display:flex;align-items:center;justify-content:center;">
-          <div style="text-align:center;color:white;">
-            <div style="font-size:3rem;">🍃</div>
-            <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;margin-top:.5rem;opacity:.9;">MATCHA &amp; LIMÓN</div>
-          </div>
-        </div>
-        <div class="p-5 text-center">
-          <h3 class="font-bold text-lg mb-1" style="color:var(--blue2);">Matcha &amp; Limón</h3>
-          <p class="text-sm mb-3" style="color:#5a7a90;">Matcha premium con toque de limón sutil</p>
-          <span class="font-bold text-base" style="color:var(--blue);">Desde S/ 8.90</span>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="text-center mt-10 reveal">
-      <a href="#delivery" class="inline-block font-bold px-8 py-4 rounded-full text-white hover:scale-105 transition-all" style="background:var(--blue);">Pedir Ahora 🛵</a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ MEANDER DIVIDER ══ -->
-<div class="meander"></div>
-
-
-<!-- ══ PRECIOS ══ -->
-<section id="precios" style="padding:6rem 1.5rem;background:var(--sand);">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-14 reveal">
-      <span class="inline-block text-xs font-bold px-4 py-1.5 rounded-full mb-4 tracking-widest uppercase" style="background:rgba(47,93,140,.1);color:var(--blue);">Precios</span>
-      <h2 class="font-bold" style="font-size:clamp(2rem,4vw,3rem);color:var(--blue2);">Simple y <em style="color:var(--blue);">transparente</em></h2>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-      <!-- Vasos -->
-      <div class="reveal bg-white rounded-2xl p-8" style="box-shadow:0 4px 24px rgba(47,93,140,.08);transition-delay:.05s;">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style="background:rgba(47,93,140,.1);">🥛</div>
-          <h3 class="font-bold text-xl" style="color:var(--blue2);">Vasos</h3>
-        </div>
-        <div class="space-y-4">
-          <div class="flex justify-between items-center py-3 border-b" style="border-color:rgba(47,93,140,.1);">
-            <div>
-              <div class="font-semibold" style="color:#161d1f;">Vaso pequeño</div>
-              <div class="text-sm" style="color:#5a7a90;">~150 ml · 1 sabor</div>
-            </div>
-            <span class="font-bold text-xl" style="color:var(--blue);">S/ 8.90</span>
-          </div>
-          <div class="flex justify-between items-center py-3 border-b" style="border-color:rgba(47,93,140,.1);">
-            <div>
-              <div class="font-semibold" style="color:#161d1f;">Vaso mediano</div>
-              <div class="text-sm" style="color:#5a7a90;">~250 ml · 2 sabores</div>
-            </div>
-            <span class="font-bold text-xl" style="color:var(--blue);">S/ 12.90</span>
-          </div>
-          <div class="flex justify-between items-center py-3">
-            <div>
-              <div class="font-semibold" style="color:#161d1f;">Vaso grande</div>
-              <div class="text-sm" style="color:#5a7a90;">~400 ml · 3 sabores</div>
-            </div>
-            <span class="font-bold text-xl" style="color:var(--blue);">S/ 16.90</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Conos -->
-      <div class="reveal bg-white rounded-2xl p-8" style="box-shadow:0 4px 24px rgba(47,93,140,.08);transition-delay:.12s;">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style="background:rgba(47,93,140,.1);">🍦</div>
-          <h3 class="font-bold text-xl" style="color:var(--blue2);">Conos</h3>
-        </div>
-        <div class="space-y-4">
-          <div class="flex justify-between items-center py-3 border-b" style="border-color:rgba(47,93,140,.1);">
-            <div>
-              <div class="font-semibold" style="color:#161d1f;">Cono simple</div>
-              <div class="text-sm" style="color:#5a7a90;">1 bola · cono artesanal</div>
-            </div>
-            <span class="font-bold text-xl" style="color:var(--blue);">S/ 5.00</span>
-          </div>
-          <div class="flex justify-between items-center py-3 border-b" style="border-color:rgba(47,93,140,.1);">
-            <div>
-              <div class="font-semibold" style="color:#161d1f;">Cono doble</div>
-              <div class="text-sm" style="color:#5a7a90;">2 bolas · cono artesanal</div>
-            </div>
-            <span class="font-bold text-xl" style="color:var(--blue);">S/ 8.50</span>
-          </div>
-          <div class="py-3">
-            <div class="rounded-xl p-4 text-sm font-medium" style="background:rgba(47,93,140,.06);color:#3d5a70;">
-              ✨ Todos los conos incluyen toppings a elección: granola, frutos rojos, miel o chips de chocolate.
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ MEANDER DIVIDER ══ -->
-<div class="meander"></div>
-
-
-<!-- ══ NOSOTROS ══ -->
-<section id="nosotros" style="padding:6rem 1.5rem;background:var(--cream);">
-  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-14 md:gap-20">
-
-    <!-- Image side -->
-    <div class="flex-1 reveal flex justify-center">
-      <div style="position:relative;max-width:420px;width:100%;">
-        <div style="border-radius:2rem;overflow:hidden;box-shadow:0 24px 64px rgba(47,93,140,.14);">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiiDMUx9ez7rAPJi9AQi17ay2_jrgSm6OLFSX9evZx2e1PlQNt6FAs6G_IIlv0KJ2PHPEyKUe52XmJkrmuCyZpIcihnBad6a3m-XGWRw_W08wM7q0jJK8FiYE5oVKb03dJF3Im8-ARohNA1KLa6wBBg5SfRUKxaSNRp73RrPxi0vVvMjvZJ6KVlM0HiR0j4B0p2woRVcW1W6vvxAxmMU6yAMlS0Vp3thE2jAl9jWfYLMADmrSpAhXsoLbRwzCknM1IR23N8kV6deg" alt="Hera artesanal" style="width:100%;height:380px;object-fit:cover;display:block;"/>
-        </div>
-        <!-- Floating tag -->
-        <div style="position:absolute;top:-16px;right:-16px;background:var(--blue);color:white;border-radius:1rem;padding:.875rem 1.25rem;box-shadow:0 8px 32px rgba(47,93,140,.3);text-align:center;">
-          <div style="font-size:1.4rem;">🏛️</div>
-          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:.25rem;">Receta<br/>Griega</div>
-        </div>
+    <!-- ═══ CHAT FOOTER (static) ═══ -->
+    <div class="chat-foot">
+      <div class="chat-input-fake">Escribe tu mensaje…</div>
+      <div class="chat-send">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="white">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
       </div>
     </div>
 
-    <!-- Text -->
-    <div class="flex-1 reveal" style="transition-delay:.1s;">
-      <span class="inline-block text-xs font-bold px-4 py-1.5 rounded-full mb-6 tracking-widest uppercase" style="background:rgba(47,93,140,.1);color:var(--blue);">Nuestra Historia</span>
-      <h2 class="font-bold mb-6" style="font-size:clamp(1.8rem,4vw,2.8rem);color:var(--blue2);">Nacimos del amor<br/>por lo <em style="color:var(--blue);">auténtico</em></h2>
-      <p class="font-medium text-lg mb-5 leading-relaxed" style="color:#3d5a70;">
-        HERA nació de un viaje a Grecia y la obsesión por replicar ese sabor único del yogur griego tradicional. Sin aditivos, sin atajos.
-      </p>
-      <p class="font-medium text-lg mb-8 leading-relaxed" style="color:#3d5a70;">
-        Cada día elaboramos nuestros helados desde cero, usando yogur griego natural como base y los mejores ingredientes que encontramos en el mercado local.
-      </p>
-      <div class="grid grid-cols-3 gap-4">
-        <div class="text-center p-4 rounded-xl" style="background:rgba(47,93,140,.06);">
-          <div class="font-bold text-2xl" style="color:var(--blue);font-family:'Noto Serif',serif;">0</div>
-          <div class="text-xs font-semibold uppercase tracking-wider mt-1" style="color:#3d5a70;">Colorantes</div>
-        </div>
-        <div class="text-center p-4 rounded-xl" style="background:rgba(47,93,140,.06);">
-          <div class="font-bold text-2xl" style="color:var(--blue);font-family:'Noto Serif',serif;">+8</div>
-          <div class="text-xs font-semibold uppercase tracking-wider mt-1" style="color:#3d5a70;">Sabores</div>
-        </div>
-        <div class="text-center p-4 rounded-xl" style="background:rgba(47,93,140,.06);">
-          <div class="font-bold text-2xl" style="color:var(--blue);font-family:'Noto Serif',serif;">100%</div>
-          <div class="text-xs font-semibold uppercase tracking-wider mt-1" style="color:#3d5a70;">Fresco</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ MEANDER DIVIDER ══ -->
-<div class="meander"></div>
-
-
-<!-- ══ DELIVERY ══ -->
-<section id="delivery" style="padding:6rem 1.5rem;background:var(--blue2);">
-  <div class="max-w-4xl mx-auto text-center">
-    <div class="reveal">
-      <span class="inline-block text-xs font-bold px-4 py-1.5 rounded-full mb-6 tracking-widest uppercase" style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);">Delivery</span>
-      <h2 class="font-bold mb-6 text-white" style="font-size:clamp(2rem,4vw,3rem);">Lo llevamos hasta<br/><em style="color:var(--light);">tu puerta</em></h2>
-      <p class="font-medium text-lg mb-12 leading-relaxed" style="color:rgba(255,255,255,.75);">
-        Disponibles en Rappi todos los días. También puedes escribirnos por WhatsApp para pedidos especiales o al por mayor.
-      </p>
-    </div>
-
-    <div class="reveal grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto" style="transition-delay:.1s;">
-      <!-- Rappi -->
-      <a href="#" class="flex items-center gap-4 p-6 rounded-2xl font-bold text-lg text-white transition-all hover:scale-105 hover:-translate-y-1" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(8px);">
-        <div class="w-14 h-14 rounded-xl flex items-center justify-center text-3xl flex-shrink-0" style="background:rgba(255,255,255,.15);">🛵</div>
-        <div class="text-left">
-          <div class="text-white font-bold text-lg">Pedir en Rappi</div>
-          <div style="color:rgba(255,255,255,.65);font-size:.875rem;font-weight:400;">Delivery rápido a tu casa</div>
-        </div>
-      </a>
-      <!-- WhatsApp -->
-      <a href="https://wa.me/51999000000?text=Hola%20HERA!%20Quiero%20hacer%20un%20pedido" target="_blank" class="flex items-center gap-4 p-6 rounded-2xl font-bold text-lg text-white transition-all hover:scale-105 hover:-translate-y-1" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(8px);">
-        <div class="w-14 h-14 rounded-xl flex items-center justify-center text-3xl flex-shrink-0" style="background:rgba(255,255,255,.15);">💬</div>
-        <div class="text-left">
-          <div class="text-white font-bold text-lg">WhatsApp</div>
-          <div style="color:rgba(255,255,255,.65);font-size:.875rem;font-weight:400;">Pedidos especiales y corporativos</div>
-        </div>
-      </a>
-    </div>
-
-    <!-- Hours -->
-    <div class="reveal mt-10" style="transition-delay:.2s;">
-      <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);">
-        <span style="color:rgba(255,255,255,.7);">🕐</span>
-        <span style="color:rgba(255,255,255,.9);font-size:.9rem;font-weight:600;">Lun – Dom · 11:00 am – 9:00 pm</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ FOOTER ══ -->
-<footer style="background:#0f2540;padding:3rem 1.5rem 2rem;">
-  <div class="max-w-6xl mx-auto">
-    <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-8">
-
-      <!-- Logo -->
-      <div>
-        <div class="font-bold text-2xl tracking-tight" style="color:white;font-family:'Noto Serif',serif;">
-          H<span style="display:inline-block;transform:scaleX(-1);letter-spacing:-2px;">Ǝ</span>RA
-        </div>
-        <div class="text-xs font-semibold tracking-[.15em] uppercase mt-1" style="color:rgba(255,255,255,.4);">Helado Griego Artesanal</div>
-      </div>
-
-      <!-- Links -->
-      <div class="flex flex-wrap justify-center gap-6 text-sm font-semibold" style="color:rgba(255,255,255,.5);">
-        <a href="#sabores"  class="hover:text-white transition-colors">Sabores</a>
-        <a href="#precios"  class="hover:text-white transition-colors">Precios</a>
-        <a href="#nosotros" class="hover:text-white transition-colors">Nosotros</a>
-        <a href="#delivery" class="hover:text-white transition-colors">Delivery</a>
-      </div>
-
-      <!-- Social -->
-      <div class="flex gap-3">
-        <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all hover:scale-110" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);">IG</a>
-        <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all hover:scale-110" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);">TK</a>
-        <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all hover:scale-110" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);">FB</a>
-      </div>
-    </div>
-
-    <div class="meander mb-6" style="opacity:.08;"></div>
-
-    <div class="text-center text-sm" style="color:rgba(255,255,255,.25);">
-      © 2024 HERA Helado Griego Artesanal · Hecho con amor 🏛️
-    </div>
-  </div>
-</footer>
-
-
-<script>
-  function openMenu() {
-    document.getElementById('mobile-menu').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeMenu() {
-    document.getElementById('mobile-menu').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  document.getElementById('close-btn').addEventListener('click', closeMenu);
-
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 20);
-  });
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+  </div><!-- /chat-box -->
+</div><!-- /page-wrap -->
 
 </body>
 </html>
