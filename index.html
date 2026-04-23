@@ -428,14 +428,23 @@
 <!-- Main Content Canvas -->
 <main class="flex-grow pb-20 px-10 md:px-24 max-w-[1400px] mx-auto w-full">
 <!-- Hero Section -->
-<section class="flex flex-col items-center justify-center text-center mb-16 md:mb-24 px-8 md:px-24" style="height: 100svh;">
-<div class="mb-6 flex justify-center w-full px-4 md:px-0">
-  <img src="./hera-logo-transparent.png" alt="HERA Frozen Yogurt Bar" class="w-full max-w-[300px] md:max-w-[500px] object-contain" style="filter: brightness(0) saturate(100%) invert(32%) sepia(31%) saturate(1131%) hue-rotate(167deg) brightness(97%) contrast(93%);" />
-</div>
-<p class="text-2xl md:text-[2.5rem] text-[#2F5D8C]/80 italic max-w-lg mx-auto tracking-widest mt-4 px-4" style="font-family:'Newsreader',serif;">
-                Frozen Yogurt Bar
-            </p>
-<div class="w-12 h-px bg-primary/20 mt-12 mb-0 mx-auto"></div>
+<section class="flex flex-col items-center justify-center text-center mb-16 md:mb-24 px-8 md:px-24 relative overflow-hidden" style="height: 100svh;">
+
+  <!-- Skyline decorativa detrás del logo -->
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+    <img src="./skyline.png" alt="" aria-hidden="true"
+      class="w-full max-w-[95vw] md:max-w-[80vw] object-contain opacity-20 md:opacity-25 select-none"
+      style="filter: brightness(0) saturate(100%) invert(32%) sepia(31%) saturate(1131%) hue-rotate(167deg) brightness(97%) contrast(93%);" />
+  </div>
+
+  <!-- Logo encima del skyline -->
+  <div class="mb-6 flex justify-center w-full px-4 md:px-0 relative z-10">
+    <img src="./hera-logo-transparent.png" alt="HERA Frozen Yogurt Bar" class="w-full max-w-[300px] md:max-w-[500px] object-contain" style="filter: brightness(0) saturate(100%) invert(32%) sepia(31%) saturate(1131%) hue-rotate(167deg) brightness(97%) contrast(93%);" />
+  </div>
+  <p class="text-2xl md:text-[2.5rem] text-[#2F5D8C]/80 italic max-w-lg mx-auto tracking-widest mt-4 px-4 relative z-10" style="font-family:'Newsreader',serif;">
+                  Frozen Yogurt Bar
+              </p>
+  <div class="w-12 h-px bg-primary/20 mt-12 mb-0 mx-auto relative z-10"></div>
 </section>
 <!-- Bento Grid Layout -->
 <section class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-32">
